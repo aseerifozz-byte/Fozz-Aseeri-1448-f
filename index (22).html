@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>سجل الإنجاز المهني للمساعدة الإدارية</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --pri:#0f4c5c; --pri-2:#13667a; --pri-soft:#e6f0f1; --gold:#a8844f; --gold-soft:#f5efe4;
+  --bg:#f4f5f2; --card:#fff; --ink:#1f2a30; --muted:#66737a; --line:#e2e6e3;
+  --ok:#2e7d5b; --warn:#b7791f; --danger:#b23b3b; --radius:14px;
+  --shadow:0 1px 2px rgba(15,76,92,.06),0 6px 20px rgba(15,76,92,.06);
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{font-family:"Tajawal","Segoe UI",Tahoma,Arial,sans-serif;background:var(--bg);color:var(--ink);font-size:15.5px;line-height:1.7}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:var(--pri-2)}
+.app{display:flex;min-height:100vh}
+/* Sidebar */
+.side{width:290px;flex-shrink:0;background:var(--pri);color:#e9f2f3;display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto}
+.brand{padding:22px 20px 16px;border-bottom:1px solid rgba(255,255,255,.12)}
+.brand .t{font-weight:800;font-size:17px;line-height:1.5}
+.brand .s{font-size:13px;opacity:.8;margin-top:4px}
+.person{display:flex;gap:12px;align-items:center;margin-top:14px;background:rgba(255,255,255,.07);padding:10px 12px;border-radius:12px}
+.avatar{width:42px;height:42px;border-radius:50%;background:var(--gold);display:grid;place-items:center;font-weight:800;color:#fff;font-size:18px;flex-shrink:0}
+.person .n{font-weight:700;font-size:14.5px}.person .r{font-size:12.5px;opacity:.8}
+.nav{padding:10px 10px 4px;flex:1}
+.nav .grp{font-size:12px;opacity:.6;padding:12px 12px 4px;letter-spacing:.3px}
+.nav button{all:unset;cursor:pointer;display:flex;align-items:center;gap:10px;width:100%;box-sizing:border-box;padding:8px 12px;border-radius:10px;font-size:14.5px;color:#e9f2f3}
+.nav button:hover{background:rgba(255,255,255,.08)}
+.nav button.on{background:#fff;color:var(--pri);font-weight:700}
+.nav .num{width:24px;height:24px;border-radius:7px;background:rgba(255,255,255,.12);display:grid;place-items:center;font-size:12px;font-weight:700;flex-shrink:0}
+.nav button.on .num{background:var(--pri);color:#fff}
+.nav .cnt{margin-inline-start:auto;font-size:12px;background:rgba(255,255,255,.14);padding:0 8px;border-radius:20px;min-width:24px;text-align:center}
+.nav button.on .cnt{background:var(--pri-soft)}
+.side-foot{padding:14px 16px 18px;font-size:12.5px;line-height:1.7;opacity:.85;border-top:1px solid rgba(255,255,255,.12)}
+.side-foot b{color:#fff}
+/* Main */
+.main{flex:1;min-width:0;display:flex;flex-direction:column}
+.top{display:flex;align-items:center;gap:12px;padding:14px 28px;background:var(--card);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
+.top h1{font-size:19px;margin:0;font-weight:800;color:var(--pri)}
+.top .sub{font-size:13px;color:var(--muted)}
+.top .sp{flex:1}
+.btn.menu-btn{display:none}
+.content{padding:24px 28px 60px;max-width:1280px;width:100%}
+.banner{display:flex;gap:12px;align-items:center;padding:12px 16px;border-radius:12px;margin-bottom:18px;font-size:14.5px;flex-wrap:wrap}
+.banner.info{background:var(--pri-soft);color:var(--pri)}
+.banner.warn{background:#fdf3e1;color:#7a5512;border:1px solid #f0d9a8}
+.banner .sp{flex:1}
+.banner > div{flex:1;min-width:220px}
+/* Buttons */
+.btn{text-decoration:none;display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:#fff;padding:7px 14px;border-radius:10px;cursor:pointer;font-size:14px;font-weight:500;white-space:nowrap;transition:.15s}
+.btn:hover{border-color:var(--pri-2);color:var(--pri)}
+.btn.pri{background:var(--pri);border-color:var(--pri);color:#fff}
+.btn.pri:hover{background:var(--pri-2);color:#fff}
+.btn.gold{background:var(--gold);border-color:var(--gold);color:#fff}
+.btn.danger{color:var(--danger);border-color:#ecc9c9}
+.btn.danger:hover{background:var(--danger);color:#fff;border-color:var(--danger)}
+.btn.sm{padding:4px 10px;font-size:13px;border-radius:8px}
+.btn.ghost{border-color:transparent;background:transparent}
+.btn svg{width:16px;height:16px}
+/* Cards & grid */
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}
+.card h2,.card h3{margin:0 0 12px;color:var(--pri)}
+.card h2{font-size:18px}.card h3{font-size:16px}
+.grid{display:grid;gap:16px}
+.g4{grid-template-columns:repeat(4,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g2{grid-template-columns:repeat(2,1fr)}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.stat::before{content:"";position:absolute;inset-inline-start:0;top:0;bottom:0;width:4px;background:var(--pri)}
+.stat.g::before{background:var(--gold)}
+.stat .l{font-size:13.5px;color:var(--muted)}
+.stat .v{font-size:30px;font-weight:800;color:var(--pri);line-height:1.3}
+.stat .h{font-size:12.5px;color:var(--muted)}
+.sec-head{display:flex;align-items:flex-start;gap:14px;margin-bottom:18px;flex-wrap:wrap}
+.sec-head .badge{width:44px;height:44px;border-radius:12px;background:var(--pri);color:#fff;display:grid;place-items:center;font-weight:800;font-size:18px;flex-shrink:0}
+.sec-head h2{margin:0;font-size:22px;color:var(--pri)}
+.sec-head p{margin:2px 0 0;color:var(--muted);font-size:14px}
+.sec-head .acts{margin-inline-start:auto;display:flex;gap:8px;flex-wrap:wrap}
+.mt{margin-top:18px}.mb{margin-bottom:18px}
+.muted{color:var(--muted)}
+.empty{text-align:center;padding:34px 16px;color:var(--muted);border:1.5px dashed var(--line);border-radius:var(--radius);background:#fafbfa}
+.empty b{display:block;color:var(--ink);font-size:16px;margin-bottom:4px}
+/* Evidence cards */
+.ev-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.ev{background:#fff;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--shadow);transition:.15s}
+.ev:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(15,76,92,.12)}
+.ev .th{height:150px;background:var(--pri-soft);display:grid;place-items:center;position:relative;cursor:pointer;overflow:hidden}
+.ev .th img{width:100%;height:100%;object-fit:cover}
+.ev .th .ph{display:flex;flex-direction:column;align-items:center;color:var(--pri);font-weight:700;font-size:13px;gap:4px}
+.ev .th .ph svg{width:44px;height:44px}
+.ev .th .fc{position:absolute;top:8px;inset-inline-start:8px;background:rgba(15,76,92,.85);color:#fff;font-size:12px;padding:1px 9px;border-radius:20px}
+.ev .bd{padding:12px 14px;flex:1;display:flex;flex-direction:column;gap:6px}
+.ev .tt{font-weight:700;font-size:15px;line-height:1.5;cursor:pointer}
+.ev .ds{font-size:13.5px;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.ev .meta{display:flex;flex-wrap:wrap;gap:6px;font-size:12px}
+.tag{background:var(--pri-soft);color:var(--pri);padding:1px 9px;border-radius:20px;font-size:12px;font-weight:500}
+.tag.gold{background:var(--gold-soft);color:#7d5f30}
+.tag.gray{background:#eef0ee;color:#4f5a5f}
+.ev .ft{display:flex;gap:6px;padding:10px 14px;border-top:1px solid var(--line);background:#fbfcfb}
+/* Filters */
+.filters{display:grid;grid-template-columns:2fr repeat(5,1fr);gap:10px;margin-bottom:16px}
+.field{display:flex;flex-direction:column;gap:4px}
+.field label{font-size:13px;color:var(--muted);font-weight:500}
+input[type=text],input[type=date],input[type=number],input[type=email],input[type=search],select,textarea{border:1px solid var(--line);border-radius:10px;padding:8px 11px;background:#fff;width:100%;outline:none;transition:.15s}
+input:focus,select:focus,textarea:focus{border-color:var(--pri-2);box-shadow:0 0 0 3px rgba(19,102,122,.12)}
+textarea{resize:vertical;min-height:90px;line-height:1.7}
+.form{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form .full{grid-column:1/-1}
+.req{color:var(--danger)}
+/* Items list */
+.items{display:flex;flex-direction:column;gap:10px}
+.item{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#fff}
+.item .dot{width:28px;height:28px;border-radius:8px;background:var(--gold-soft);color:#7d5f30;display:grid;place-items:center;font-weight:800;font-size:13px;flex-shrink:0}
+.item .tx{flex:1;min-width:0}
+.item .tx b{display:block}
+.item .tx div{font-size:14px;color:var(--muted);white-space:pre-wrap}
+.item .ac{display:flex;gap:4px}
+/* Bars */
+.bars{display:flex;flex-direction:column;gap:10px}
+.bar{display:grid;grid-template-columns:200px 1fr 44px;gap:10px;align-items:center;font-size:14px}
+.bar .tr{height:12px;background:#edf1ef;border-radius:20px;overflow:hidden}
+.bar .fl{height:100%;background:linear-gradient(90deg,var(--pri-2),var(--pri));border-radius:20px}
+.bar .vv{font-weight:700;color:var(--pri);text-align:center}
+.schools{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.school{border:1px solid var(--line);border-radius:12px;padding:14px;text-align:center;background:#fbfcfb}
+.school .v{font-size:28px;font-weight:800;color:var(--pri)}
+/* Modal */
+.ov{position:fixed;inset:0;background:rgba(18,32,38,.55);display:none;align-items:flex-start;justify-content:center;z-index:100;padding:30px 14px;overflow-y:auto}
+.ov.show{display:flex}
+.modal{background:#fff;border-radius:18px;width:100%;max-width:760px;box-shadow:0 30px 80px rgba(0,0,0,.25);animation:pop .18s ease}
+.modal.lg{max-width:1000px}.modal.sm{max-width:460px}
+@keyframes pop{from{transform:translateY(10px);opacity:0}to{transform:none;opacity:1}}
+.mh{display:flex;align-items:center;gap:10px;padding:16px 22px;border-bottom:1px solid var(--line)}
+.mh h3{margin:0;font-size:18px;color:var(--pri);flex:1}
+.mb2{padding:20px 22px}
+.mf{display:flex;gap:8px;justify-content:flex-start;padding:14px 22px;border-top:1px solid var(--line);background:#fafbfa;border-radius:0 0 18px 18px;flex-wrap:wrap}
+.x{all:unset;cursor:pointer;width:34px;height:34px;display:grid;place-items:center;border-radius:9px;font-size:22px;color:var(--muted)}
+.x:hover{background:#f0f2f0}
+.drop{border:2px dashed #c9d6d6;border-radius:12px;padding:20px;text-align:center;background:#f8fbfb;cursor:pointer;color:var(--muted)}
+.drop.hover{border-color:var(--pri-2);background:var(--pri-soft)}
+.files{display:flex;flex-direction:column;gap:6px;margin-top:10px}
+.file{display:flex;align-items:center;gap:10px;padding:7px 10px;border:1px solid var(--line);border-radius:10px;font-size:13.5px}
+.file img{width:40px;height:40px;object-fit:cover;border-radius:6px}
+.file .fi{width:40px;height:40px;border-radius:6px;background:var(--pri-soft);display:grid;place-items:center;color:var(--pri);font-weight:800;font-size:11px}
+.file .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pv-meta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.pv-desc{white-space:pre-wrap;background:#fafbfa;border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:16px}
+.pv-file{margin-bottom:16px;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.pv-file .h{display:flex;align-items:center;gap:8px;padding:8px 12px;background:#fafbfa;border-bottom:1px solid var(--line);font-size:14px;flex-wrap:wrap}
+.pv-file .h span{flex:1;min-width:120px}
+.pv-file img{display:block;max-width:100%;margin:0 auto;max-height:70vh}
+.pv-file iframe{width:100%;height:70vh;border:0;display:block}
+/* Toast */
+.toasts{position:fixed;bottom:20px;left:20px;display:flex;flex-direction:column;gap:8px;z-index:200}
+.toast{background:var(--ink);color:#fff;padding:10px 16px;border-radius:10px;font-size:14px;box-shadow:0 8px 24px rgba(0,0,0,.2);animation:pop .2s}
+.toast.ok{background:var(--ok)}.toast.err{background:var(--danger)}
+.chk{display:flex;align-items:center;gap:8px;padding:7px 10px;border:1px solid var(--line);border-radius:10px;cursor:pointer;font-size:14px;background:#fff}
+.chk input{width:17px;height:17px;accent-color:var(--pri)}
+.chks{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.fab{display:none}
+.scrim{display:none}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.kv{display:grid;grid-template-columns:170px 1fr;gap:6px 14px;font-size:14.5px}
+.kv dt{color:var(--muted)}.kv dd{margin:0;font-weight:500}
+hr.s{border:0;border-top:1px solid var(--line);margin:18px 0}
+#print-root{display:none}
+/* Lock */
+body.locked .app,body.locked .fab{display:none!important}
+.lock{position:fixed;inset:0;z-index:300;display:none;align-items:center;justify-content:center;background:linear-gradient(135deg,#0f4c5c,#16697d 60%,#0b3a46);padding:20px}
+body.locked .lock{display:flex}
+body.locked .ov{z-index:400}
+.lock-box{background:#fff;border-radius:20px;padding:30px 28px;width:100%;max-width:400px;text-align:center;box-shadow:0 30px 80px rgba(0,0,0,.3)}
+.lock-box .ic{width:64px;height:64px;border-radius:50%;background:var(--pri-soft);color:var(--pri);display:grid;place-items:center;margin:0 auto 12px;font-size:28px}
+.lock-box h2{margin:0;color:var(--pri);font-size:20px}
+.lock-box p{margin:4px 0 18px;color:var(--muted);font-size:14px}
+.lock-box .pw{position:relative}
+.lock-box input{text-align:center;font-size:18px;padding:11px 44px;letter-spacing:1px}
+.lock-box .eye{position:absolute;top:50%;left:8px;transform:translateY(-50%);border:0;background:none;cursor:pointer;font-size:18px;color:var(--muted)}
+.lock-box .err{color:var(--danger);font-size:13.5px;min-height:22px;margin-top:6px}
+.lock-box .btn.pri{width:100%;justify-content:center;padding:11px;font-size:16px;margin-top:4px}
+.lock-box .fg{all:unset;cursor:pointer;color:var(--muted);font-size:13px;margin-top:14px;display:inline-block}
+.lock-box .fg:hover{color:var(--danger)}
+@media print{.lock{display:none!important}body.locked #print-root{display:none!important}}
+
+
+@media (max-width:1100px){.g4{grid-template-columns:repeat(2,1fr)}.filters{grid-template-columns:1fr 1fr 1fr}.filters .f-q{grid-column:1/-1}}
+@media (max-width:860px){
+  .side{position:fixed;inset-block:0;right:0;transform:translateX(100%);transition:.25s;z-index:60;box-shadow:-10px 0 40px rgba(0,0,0,.2)}
+  .side.open{transform:none}
+  .scrim.show{display:block;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:55}
+  .btn.menu-btn{display:inline-flex}
+  .top{padding:10px 14px}.top .sub{display:none}.top h1{font-size:16px}
+  .top .hide-m{display:none}
+  .content{padding:16px 14px 90px}
+  .g3,.g2{grid-template-columns:1fr}
+  .form{grid-template-columns:1fr}
+  .filters{grid-template-columns:1fr 1fr}
+  .bar{grid-template-columns:120px 1fr 34px;font-size:13px}
+  .schools{grid-template-columns:1fr}
+  .chks{grid-template-columns:1fr}
+  .kv{grid-template-columns:1fr}.kv dt{margin-top:6px}
+  .fab{display:grid;position:fixed;bottom:18px;left:18px;width:56px;height:56px;border-radius:50%;background:var(--gold);color:#fff;font-size:30px;place-items:center;border:0;box-shadow:0 10px 24px rgba(0,0,0,.25);z-index:50;cursor:pointer}
+  .toasts{bottom:86px}
+  .sec-head .acts{margin-inline-start:0;width:100%}
+}
+@media (max-width:480px){.g4{grid-template-columns:1fr 1fr}.stat .v{font-size:24px}}
+
+/* ====== PRINT ====== */
+@page{size:A4;margin:14mm 13mm 16mm}
+@media print{
+  body{background:#fff;font-size:12.5pt}
+  .app,.ov,.toasts,.fab,.scrim{display:none!important}
+  #print-root{display:block!important}
+  .p-page{page-break-after:always}
+  .p-page:last-child{page-break-after:auto}
+}
+#print-root{color:#111;font-family:"Tajawal",Tahoma,Arial,sans-serif;line-height:1.75}
+.p-head{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:3px double #0f4c5c;padding-bottom:8px;margin-bottom:14px;font-size:11pt}
+.p-head .c{text-align:center;font-weight:800;color:#0f4c5c;font-size:13pt}
+.p-head .r,.p-head .l{width:32%;line-height:1.6}
+.p-head .l{text-align:left}
+.p-title{text-align:center;font-size:17pt;font-weight:800;color:#0f4c5c;margin:6px 0 12px}
+.p-info{width:100%;border-collapse:collapse;margin-bottom:14px;font-size:11pt}
+.p-info td{border:1px solid #9fb3b8;padding:5px 8px}
+.p-info td.k{background:#eaf1f2;font-weight:700;width:18%}
+.p-sec{font-size:14.5pt;font-weight:800;color:#fff;background:#0f4c5c;padding:5px 12px;border-radius:4px;margin:16px 0 10px;page-break-after:avoid}
+.p-sub{font-size:12.5pt;font-weight:800;color:#0f4c5c;margin:12px 0 6px;border-bottom:1px solid #c7d3d5;padding-bottom:3px;page-break-after:avoid}
+.p-tbl{width:100%;border-collapse:collapse;font-size:11pt;margin-bottom:10px}
+.p-tbl th{background:#0f4c5c;color:#fff;padding:5px 7px;border:1px solid #0f4c5c;font-weight:700}
+.p-tbl td{border:1px solid #b9c7ca;padding:5px 7px;vertical-align:top}
+.p-tbl tr:nth-child(even) td{background:#f5f8f8}
+.p-tbl tr{page-break-inside:avoid}
+.p-ev{border:1px solid #b9c7ca;border-radius:6px;padding:8px 10px;margin-bottom:10px;page-break-inside:avoid}
+.p-ev .t{font-weight:800;color:#0f4c5c}
+.p-ev .m{font-size:10pt;color:#444}
+.p-ev .d{white-space:pre-wrap;font-size:11pt;margin-top:4px}
+.p-imgs{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.p-imgs img{max-height:200px;max-width:48%;border:1px solid #ccc;border-radius:4px;object-fit:contain}
+.p-files{font-size:10pt;color:#333;margin-top:4px}
+.p-intro{white-space:pre-wrap;font-size:11.5pt;margin-bottom:8px}
+.p-sign{display:flex;justify-content:space-between;margin-top:34px;font-size:11.5pt;page-break-inside:avoid}
+.p-sign div{width:40%;text-align:center;line-height:2.2}
+.p-cover{display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:240mm;text-align:center;border:3px double #0f4c5c;padding:20mm;border-radius:6px}
+.p-cover .big{font-size:28pt;font-weight:800;color:#0f4c5c;margin:20px 0 10px}
+.p-cover .mid{font-size:16pt;margin:4px 0}
+.p-cover .ln{width:120px;height:3px;background:#a8844f;margin:18px auto}
+.p-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}
+.p-stats div{border:1px solid #b9c7ca;border-radius:6px;padding:6px;text-align:center;font-size:10.5pt}
+.p-stats b{display:block;font-size:16pt;color:#0f4c5c}
+.p-none{color:#777;font-size:11pt}
+</style>
+</head>
+<body class="locked">
+<div class="lock" id="lock"><form class="lock-box" id="lockForm" autocomplete="off">
+  <div class="ic">🔒</div><h2>سجل الإنجاز المهني</h2><p>هذا السجل محمي بكلمة مرور</p>
+  <div class="pw"><input type="password" id="lockPw" placeholder="كلمة المرور" autocomplete="current-password" autocapitalize="off" autocorrect="off" spellcheck="false" dir="ltr"><button type="button" class="eye" id="lockEye" aria-label="إظهار">👁</button></div>
+  <div class="err" id="lockErr"></div>
+  <button class="btn pri" type="submit">دخول</button>
+  <button type="button" class="fg" id="lockForgot">نسيتُ كلمة المرور</button>
+</form></div>
+<div class="app">
+  <aside class="side" id="side">
+    <div class="brand">
+      <div class="t">سجل الإنجاز المهني</div>
+      <div class="s">للمساعدة الإدارية — <span data-bind="year"></span></div>
+      <div class="person">
+        <div class="avatar" id="avatar">ف</div>
+        <div><div class="n" data-bind="name"></div><div class="r" data-bind="title"></div></div>
+      </div>
+    </div>
+    <nav class="nav" id="nav"></nav>
+    <div class="side-foot">
+      <b>الحفظ محلي:</b> تُحفظ بياناتكِ على هذا الجهاز وهذا المتصفح فقط، ولا تنتقل تلقائيًا إلى جهاز آخر. صدّري نسخة احتياطية بانتظام.
+      <div style="margin-top:6px">آخر نسخة احتياطية: <b id="lastBk">—</b></div>
+    </div>
+  </aside>
+  <div class="scrim" id="scrim"></div>
+  <main class="main">
+    <header class="top">
+      <button class="btn menu-btn" id="menuBtn" aria-label="القائمة">☰</button>
+      <div>
+        <h1 id="pageTitle">الرئيسية</h1>
+        <div class="sub"><span data-bind="name"></span> · <span data-bind="title"></span> · <span data-bind="org"></span></div>
+      </div>
+      <div class="sp"></div>
+      <button class="btn" data-act="lock-now" title="قفل السجل">🔒<span class="hide-m"> قفل</span></button>
+      <button class="btn hide-m" data-act="backup">⤓ نسخة احتياطية</button>
+      <button class="btn pri" data-act="add-ev">＋ شاهد جديد</button>
+    </header>
+    <div class="content" id="content"></div>
+  </main>
+</div>
+<button class="fab" data-act="add-ev" aria-label="إضافة شاهد">＋</button>
+
+<div class="ov" id="ov"><div class="modal" id="modal"></div></div>
+<div class="toasts" id="toasts"></div>
+<div id="print-root"></div>
+<input type="file" id="importInput" accept=".json,application/json" hidden>
+
+<script>
+"use strict";
+/* ============ Constants ============ */
+const KEY = 'fz_achievement_record_v1';
+const DEFAULT_SECTIONS = [
+  {id:'profile',     title:'البيانات الشخصية والمهنية', kind:'profile', desc:'البيانات التعريفية والمؤهلات والخبرات.'},
+  {id:'tasks',       title:'المهام والمسؤوليات الوظيفية', desc:'المهام المكلّفة بها خلال العام الدراسي.'},
+  {id:'admin',       title:'الإنجازات الإدارية', desc:'ما تحقق من أعمال إدارية وتنظيمية.'},
+  {id:'madrasati',   title:'منصة مدرستي', desc:'أعمال المتابعة والتفعيل والتقارير على منصة مدرستي.'},
+  {id:'tech',        title:'التقنية والتحول الرقمي', desc:'الحلول الرقمية والأنظمة والتصميم والإنتاج الإعلامي.'},
+  {id:'initiatives', title:'المبادرات والبرامج المدرسية', desc:'المبادرات والبرامج التي قدّمتها أو شاركت فيها.'},
+  {id:'teamwork',    title:'العمل الجماعي والشراكة', desc:'اللجان وفرق العمل والشراكات.'},
+  {id:'pd',          title:'التطوير المهني والدورات', desc:'الدورات والبرامج التدريبية وورش العمل.'},
+  {id:'impact',      title:'الأثر والنتائج', desc:'النتائج القابلة للقياس وأثر الأعمال على المدرسة والطالبات.'},
+  {id:'evidence',    title:'الشواهد والأدلة', kind:'evidence', desc:'جميع الشواهد مع البحث والتصفية.'}
+];
+const SCHOOLS = {s1:'المتوسطة الأولى', s2:'المتوسطة الثانية', both:'المدرستان'};
+const PROFILE_FIELDS = [
+  ['name','الاسم',1],['title','المسمى الوظيفي',1],['org','جهة العمل',1],['year','العام الدراسي',1],
+  ['qualification','المؤهل العلمي'],['major','التخصص'],['experience','سنوات الخبرة'],['startDate','تاريخ المباشرة في المدرسة'],
+  ['email','البريد الإلكتروني الرسمي'],['principal','مديرة المدرسة'],['department','الإدارة التعليمية'],['ministryNo','الرقم الوزاري للمدرسة']
+];
+const ICON = {
+  pdf:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><text x="12" y="17" font-size="5" text-anchor="middle" direction="ltr" fill="currentColor" stroke="none" font-family="Arial" font-weight="700">PDF</text></svg>',
+  doc:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M8 13h8M8 17h6"/></svg>',
+  none:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 14h8"/></svg>'
+};
+
+/* ============ Helpers ============ */
+const $ = (s, r=document) => r.querySelector(s);
+const $$ = (s, r=document) => [...r.querySelectorAll(s)];
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2,8);
+const todayISO = () => { const d=new Date(); d.setMinutes(d.getMinutes()-d.getTimezoneOffset()); return d.toISOString().slice(0,10); };
+function fmtDate(iso){
+  if(!iso) return '—';
+  const d = new Date(iso+'T12:00:00');
+  if(isNaN(d)) return iso;
+  let g = d.toLocaleDateString('ar-SA-u-ca-gregory-nu-latn',{year:'numeric',month:'2-digit',day:'2-digit'});
+  let h = '';
+  try{ h = d.toLocaleDateString('ar-SA-u-ca-islamic-umalqura-nu-latn',{year:'numeric',month:'2-digit',day:'2-digit'}); }catch(e){}
+  return h ? `${h} — ${g}م` : g;
+}
+function fmtDT(ts){ if(!ts) return 'لم تُصدَّر بعد'; const d=new Date(ts); return fmtDate(new Date(ts - d.getTimezoneOffset()*60000).toISOString().slice(0,10)).split(' — ')[0] + ' ' + d.toLocaleTimeString('ar-SA-u-nu-latn',{hour:'2-digit',minute:'2-digit'}); }
+const fmtSize = b => b>1048576 ? (b/1048576).toFixed(1)+' م.ب' : Math.max(1,Math.round(b/1024))+' ك.ب';
+const isImg = t => /^image\//.test(t||'');
+const isPdf = (t,n) => t==='application/pdf' || /\.pdf$/i.test(n||'');
+function toast(msg, type=''){ const t=document.createElement('div'); t.className='toast '+type; t.textContent=msg; $('#toasts').appendChild(t); setTimeout(()=>t.remove(), 3600); }
+
+/* ============ IndexedDB (files) ============ */
+const FileDB = {
+  db:null,
+  open(){
+    return new Promise((res,rej)=>{
+      if(!('indexedDB' in window)) return rej(new Error('IndexedDB غير مدعوم'));
+      const r = indexedDB.open('fz_achievement_files', 1);
+      r.onupgradeneeded = () => { r.result.createObjectStore('files',{keyPath:'id'}); };
+      r.onsuccess = () => { this.db=r.result; res(); };
+      r.onerror = () => rej(r.error);
+    });
+  },
+  tx(mode){ return this.db.transaction('files', mode).objectStore('files'); },
+  put(rec){ return new Promise((res,rej)=>{ const q=this.tx('readwrite').put(rec); q.onsuccess=()=>res(); q.onerror=()=>rej(q.error); }); },
+  get(id){ return new Promise((res,rej)=>{ const q=this.tx('readonly').get(id); q.onsuccess=()=>res(q.result); q.onerror=()=>rej(q.error); }); },
+  del(id){ return new Promise((res,rej)=>{ const q=this.tx('readwrite').delete(id); q.onsuccess=()=>res(); q.onerror=()=>rej(q.error); }); },
+  clear(){ return new Promise((res,rej)=>{ const q=this.tx('readwrite').clear(); q.onsuccess=()=>res(); q.onerror=()=>rej(q.error); }); },
+  keys(){ return new Promise((res,rej)=>{ const q=this.tx('readonly').getAllKeys(); q.onsuccess=()=>res(q.result); q.onerror=()=>rej(q.error); }); }
+};
+const urlCache = new Map();
+async function fileURL(id){
+  if(urlCache.has(id)) return urlCache.get(id);
+  const rec = await FileDB.get(id);
+  if(!rec) return null;
+  const u = URL.createObjectURL(rec.blob);
+  urlCache.set(id,u); return u;
+}
+function dropURL(id){ if(urlCache.has(id)){ URL.revokeObjectURL(urlCache.get(id)); urlCache.delete(id);} }
+
+/* ============ State (localStorage) ============ */
+let state, lsOK = true;
+function freshState(){
+  return {
+    version:1,
+    profile:{ name:'فوزية عسيري', title:'مساعدة إدارية', org:'المتوسطة الأولى والثانية بالخبر', year:'1448هـ',
+      principal:'نورة العتيبي', department:'الإدارة العامة للتعليم بالمنطقة الشرقية', bio:'' },
+    sections: DEFAULT_SECTIONS.map(s=>({...s, intro:'', items:[]})),
+    evidence: [],
+    settings: { reminderDays:7, snoozeUntil:0 },
+    meta: { created:Date.now(), lastChange:0, lastBackup:0 }
+  };
+}
+function load(){
+  try{
+    const raw = localStorage.getItem(KEY);
+    state = raw ? JSON.parse(raw) : freshState();
+  }catch(e){ lsOK=false; state=freshState(); }
+  // ensure default sections exist (forward-compatible)
+  DEFAULT_SECTIONS.forEach((d,i)=>{ if(!state.sections.find(s=>s.id===d.id)) state.sections.splice(i,0,{...d,intro:'',items:[]}); });
+  state.settings = Object.assign({reminderDays:7,snoozeUntil:0}, state.settings||{});
+  state.meta = Object.assign({created:Date.now(),lastChange:0,lastBackup:0}, state.meta||{});
+}
+function save(markChange=true){
+  if(markChange) state.meta.lastChange = Date.now();
+  try{ localStorage.setItem(KEY, JSON.stringify(state)); lsOK=true; }
+  catch(e){ lsOK=false; toast('تعذّر الحفظ في المتصفح — تحققي من المساحة أو من وضع التصفح الخاص','err'); }
+}
+const sec = id => state.sections.find(s=>s.id===id);
+const secTitle = id => (sec(id)||{}).title || 'غير محدد';
+const secNum = id => state.sections.findIndex(s=>s.id===id)+1;
+const evOf = id => state.evidence.filter(e=>e.section===id);
+
+/* ============ Router / layout ============ */
+let view = 'home';
+const filt = {q:'', section:'', school:'', from:'', to:'', sort:'new'};
+
+function renderNav(){
+  const c = id => evOf(id).length;
+  let h = `<div class="grp">عام</div>
+  <button data-go="home" class="${view==='home'?'on':''}"><span class="num">⌂</span>الرئيسية<span class="cnt">${state.evidence.length}</span></button>
+  <button data-go="stats" class="${view==='stats'?'on':''}"><span class="num">▤</span>لوحة الإحصائيات</button>
+  <div class="grp">أقسام السجل</div>`;
+  state.sections.forEach((s,i)=>{
+    const n = s.kind==='evidence' ? state.evidence.length : c(s.id);
+    h += `<button data-go="sec:${s.id}" class="${view==='sec:'+s.id?'on':''}"><span class="num">${i+1}</span><span>${esc(s.title)}</span>${s.kind==='profile'?'':`<span class="cnt">${n}</span>`}</button>`;
+  });
+  h += `<div class="grp">الأدوات</div>
+  <button data-go="reports" class="${view==='reports'?'on':''}"><span class="num">⎙</span>التقارير والطباعة</button>
+  <button data-go="settings" class="${view==='settings'?'on':''}"><span class="num">⚙</span>النسخ الاحتياطي والإعدادات</button>`;
+  $('#nav').innerHTML = h;
+}
+function bindProfile(){
+  $$('[data-bind]').forEach(el=>{ el.textContent = state.profile[el.dataset.bind] || '—'; });
+  $('#avatar').textContent = (state.profile.name||'ف').trim().charAt(0);
+  $('#lastBk').textContent = fmtDT(state.meta.lastBackup);
+}
+function go(v){ view=v; closeSide(); render(); window.scrollTo({top:0}); }
+function render(){
+  renderNav(); bindProfile();
+  const c = $('#content');
+  let title = 'الرئيسية', html='';
+  if(view==='home'){ html = vHome(); }
+  else if(view==='stats'){ title='لوحة الإحصائيات'; html = vStats(); }
+  else if(view==='reports'){ title='التقارير والطباعة'; html = vReports(); }
+  else if(view==='settings'){ title='النسخ الاحتياطي والإعدادات'; html = vSettings(); }
+  else if(view.startsWith('sec:')){
+    const s = sec(view.slice(4)); if(!s){ view='home'; return render(); }
+    title = s.title;
+    html = s.kind==='profile' ? vProfile(s) : s.kind==='evidence' ? vEvidence(s) : vSection(s);
+  }
+  $('#pageTitle').textContent = title;
+  c.innerHTML = reminderBanner() + (lsOK?'':`<div class="banner warn">⚠ المتصفح لا يسمح بالحفظ المحلي حاليًا (ربما وضع التصفح الخاص). لن تُحفظ التعديلات بعد إغلاق الصفحة.</div>`) + html;
+  hydrateThumbs();
+  if(view==='sec:evidence') bindFilters();
+}
+
+/* ============ Views ============ */
+function counts(){
+  const E = state.evidence;
+  const by = id => E.filter(e=>e.section===id).length;
+  return {
+    total:E.length, admin:by('admin'), tech:by('tech'), madrasati:by('madrasati'), initiatives:by('initiatives'), pd:by('pd'),
+    s1:E.filter(e=>e.school==='s1').length, s2:E.filter(e=>e.school==='s2').length, both:E.filter(e=>e.school==='both').length,
+    files:E.reduce((a,e)=>a+(e.files||[]).length,0),
+    items: state.sections.reduce((a,s)=>a+(s.items||[]).length,0)
+  };
+}
+function statCards(k){
+  return `<div class="grid g4">
+    <div class="stat"><div class="l">إجمالي الشواهد</div><div class="v">${k.total}</div><div class="h">${k.files} ملفًا مرفقًا</div></div>
+    <div class="stat g"><div class="l">الإنجازات الإدارية</div><div class="v">${k.admin}</div><div class="h">شاهدًا في القسم</div></div>
+    <div class="stat"><div class="l">الشواهد التقنية</div><div class="v">${k.tech}</div><div class="h">+ ${k.madrasati} لمنصة مدرستي</div></div>
+    <div class="stat g"><div class="l">المبادرات</div><div class="v">${k.initiatives}</div><div class="h">مبادرة وبرنامج</div></div>
+    <div class="stat"><div class="l">الدورات التدريبية</div><div class="v">${k.pd}</div><div class="h">شاهد تطوير مهني</div></div>
+    <div class="stat g"><div class="l">المتوسطة الأولى</div><div class="v">${k.s1+k.both}</div><div class="h">${k.s1} خاصة + ${k.both} مشتركة</div></div>
+    <div class="stat"><div class="l">المتوسطة الثانية</div><div class="v">${k.s2+k.both}</div><div class="h">${k.s2} خاصة + ${k.both} مشتركة</div></div>
+    <div class="stat g"><div class="l">بنود الأقسام</div><div class="v">${k.items}</div><div class="h">مهام وإنجازات مكتوبة</div></div>
+  </div>`;
+}
+function vHome(){
+  const k = counts();
+  const recent = [...state.evidence].sort((a,b)=>(b.date||'').localeCompare(a.date||'') || b.createdAt-a.createdAt).slice(0,6);
+  const filled = state.sections.filter(s=>!s.kind && (evOf(s.id).length || (s.items||[]).length || s.intro)).length;
+  const total = state.sections.filter(s=>!s.kind).length;
+  return `
+  <div class="banner info">🔒 <div><b>بياناتكِ محفوظة محليًا</b> على هذا الجهاز وهذا المتصفح (Local Storage للبيانات، وIndexedDB للصور وملفات PDF). لا تُرسل لأي خادم ولا تنتقل تلقائيًا لجهاز آخر — لنقلها استخدمي «تصدير نسخة احتياطية» ثم «استيراد» على الجهاز الآخر.</div></div>
+  <div class="card mb" style="display:flex;gap:18px;align-items:center;flex-wrap:wrap;background:linear-gradient(120deg,#0f4c5c,#16697d);color:#fff;border:0">
+    <div style="flex:1;min-width:240px">
+      <div style="font-size:14px;opacity:.85">مرحبًا،</div>
+      <div style="font-size:24px;font-weight:800">${esc(state.profile.name)}</div>
+      <div style="opacity:.9">${esc(state.profile.title)} — ${esc(state.profile.org)} — العام الدراسي ${esc(state.profile.year)}</div>
+      <div style="margin-top:10px;font-size:14px;opacity:.9">اكتمل محتوى ${filled} من ${total} أقسام · ${k.total} شاهدًا موثّقًا</div>
+    </div>
+    <div class="row">
+      <button class="btn gold" data-act="add-ev">＋ إضافة شاهد</button>
+      <button class="btn" style="color:var(--pri)" data-go="reports">⎙ طباعة السجل</button>
+    </div>
+  </div>
+  ${statCards(k)}
+  <div class="grid g2 mt">
+    <div class="card"><h2>توزيع الشواهد على الأقسام</h2>${barsHTML()}</div>
+    <div class="card"><h2>الوصول السريع للأقسام</h2>
+      <div class="items">${state.sections.filter(s=>!s.kind).map(s=>`
+        <div class="item" style="cursor:pointer" data-go="sec:${s.id}"><div class="dot">${secNum(s.id)}</div>
+        <div class="tx"><b>${esc(s.title)}</b><div>${evOf(s.id).length} شاهد · ${(s.items||[]).length} بند</div></div><span class="muted">‹</span></div>`).join('')}
+      </div>
+    </div>
+  </div>
+  <div class="card mt"><div class="row" style="margin-bottom:12px"><h2 style="margin:0;flex:1">أحدث الشواهد</h2><button class="btn sm" data-go="sec:evidence">عرض الكل</button></div>
+    ${recent.length ? `<div class="ev-grid">${recent.map(evCard).join('')}</div>` : emptyEv()}
+  </div>`;
+}
+function emptyEv(secId){ return `<div class="empty"><b>لا توجد شواهد بعد</b>ابدئي بإضافة أول شاهد مع صوره أو ملفات PDF الخاصة به.<div class="mt"><button class="btn pri" data-act="add-ev" ${secId?`data-sec="${secId}"`:''}>＋ إضافة شاهد</button></div></div>`; }
+function barsHTML(){
+  const list = state.sections.filter(s=>s.kind!=='evidence').map(s=>({t:s.title,v:evOf(s.id).length}));
+  const max = Math.max(1,...list.map(x=>x.v));
+  return `<div class="bars">${list.map(x=>`<div class="bar"><span>${esc(x.t)}</span><div class="tr"><div class="fl" style="width:${x.v/max*100}%"></div></div><span class="vv">${x.v}</span></div>`).join('')}</div>`;
+}
+function vStats(){
+  const k = counts();
+  // by month
+  const months = {};
+  state.evidence.forEach(e=>{ if(e.date){ const m=e.date.slice(0,7); months[m]=(months[m]||0)+1; } });
+  const mk = Object.keys(months).sort();
+  const mmax = Math.max(1,...Object.values(months));
+  const mname = m => { const d=new Date(m+'-15T12:00:00'); return d.toLocaleDateString('ar-SA-u-ca-gregory-nu-latn',{month:'long',year:'numeric'}); };
+  const withFiles = state.evidence.filter(e=>(e.files||[]).length).length;
+  return `${statCards(k)}
+  <div class="card mt"><h2>الشواهد لكل مدرسة</h2>
+    <div class="schools">
+      <div class="school"><div class="muted">المتوسطة الأولى فقط</div><div class="v">${k.s1}</div></div>
+      <div class="school"><div class="muted">المتوسطة الثانية فقط</div><div class="v">${k.s2}</div></div>
+      <div class="school"><div class="muted">مشتركة بين المدرستين</div><div class="v">${k.both}</div></div>
+    </div>
+    <p class="muted" style="margin:12px 0 0;font-size:13.5px">إجمالي ما يخص المتوسطة الأولى: <b>${k.s1+k.both}</b> · إجمالي ما يخص المتوسطة الثانية: <b>${k.s2+k.both}</b></p>
+  </div>
+  <div class="grid g2 mt">
+    <div class="card"><h2>الشواهد حسب القسم</h2>${barsHTML()}</div>
+    <div class="card"><h2>الشواهد حسب الشهر</h2>
+      ${mk.length ? `<div class="bars">${mk.map(m=>`<div class="bar"><span>${mname(m)}</span><div class="tr"><div class="fl" style="width:${months[m]/mmax*100}%;background:linear-gradient(90deg,#c4a273,#a8844f)"></div></div><span class="vv">${months[m]}</span></div>`).join('')}</div>` : '<p class="muted">ستظهر هنا بعد إضافة شواهد بتواريخ.</p>'}
+      <hr class="s"><dl class="kv"><dt>شواهد بمرفقات</dt><dd>${withFiles} من ${k.total}</dd><dt>عدد الملفات المرفقة</dt><dd>${k.files}</dd><dt>بنود الأقسام المكتوبة</dt><dd>${k.items}</dd></dl>
+    </div>
+  </div>
+  <div class="row mt"><button class="btn" data-act="print-stats">⎙ طباعة لوحة الإحصائيات</button></div>`;
+}
+function vProfile(s){
+  const p = state.profile;
+  return `<div class="sec-head"><div class="badge">${secNum(s.id)}</div><div><h2>${esc(s.title)}</h2><p>تُستخدم هذه البيانات في رأس الصفحات المطبوعة وغلاف السجل.</p></div>
+    <div class="acts"><button class="btn" data-act="print-sec" data-sec="${s.id}">⎙ طباعة القسم</button></div></div>
+  <div class="card"><form id="profForm" class="form">
+    ${PROFILE_FIELDS.map(([k,l,r])=>`<div class="field"><label>${l} ${r?'<span class="req">*</span>':''}</label><input type="${k==='email'?'email':k==='startDate'?'date':'text'}" name="${k}" value="${esc(p[k]||'')}" ${r?'required':''}></div>`).join('')}
+    <div class="field full"><label>نبذة مهنية</label><textarea name="bio" rows="4" placeholder="نبذة مختصرة عن مسيرتكِ المهنية وأبرز مهاراتكِ">${esc(p.bio||'')}</textarea></div>
+    <div class="full row"><button class="btn pri" type="submit">حفظ البيانات</button><span class="muted" style="font-size:13px">تُحفظ أيضًا تلقائيًا أثناء الكتابة.</span></div>
+  </form></div>
+  <div class="card mt"><div class="row" style="margin-bottom:10px"><h3 style="margin:0;flex:1">شواهد هذا القسم (المؤهلات والشهادات)</h3><button class="btn sm pri" data-act="add-ev" data-sec="${s.id}">＋ شاهد</button></div>
+    ${evOf(s.id).length?`<div class="ev-grid">${evOf(s.id).map(evCard).join('')}</div>`:'<p class="muted" style="margin:0">لا توجد شواهد مرتبطة بهذا القسم.</p>'}
+  </div>`;
+}
+function vSection(s){
+  const items = s.items||[], evs = evOf(s.id).sort((a,b)=>(b.date||'').localeCompare(a.date||''));
+  return `<div class="sec-head"><div class="badge">${secNum(s.id)}</div><div><h2>${esc(s.title)}</h2><p>${esc(s.desc||'')}</p></div>
+    <div class="acts"><button class="btn" data-act="add-item" data-sec="${s.id}">＋ بند</button><button class="btn pri" data-act="add-ev" data-sec="${s.id}">＋ شاهد</button><button class="btn" data-act="print-sec" data-sec="${s.id}">⎙ طباعة القسم</button></div></div>
+  <div class="card"><h3>نبذة عن القسم</h3>
+    <textarea id="secIntro" data-sec="${s.id}" rows="3" placeholder="اكتبي مقدمة أو وصفًا عامًا لما يتضمنه هذا القسم (تظهر في الطباعة)">${esc(s.intro||'')}</textarea>
+    <div class="muted" style="font-size:12.5px;margin-top:4px">يُحفظ تلقائيًا.</div>
+  </div>
+  <div class="card mt"><div class="row" style="margin-bottom:12px"><h3 style="margin:0;flex:1">بنود القسم <span class="muted" style="font-weight:400;font-size:13px">(${items.length})</span></h3><button class="btn sm" data-act="add-item" data-sec="${s.id}">＋ إضافة بند</button></div>
+    ${items.length?`<div class="items">${items.map((it,i)=>`<div class="item"><div class="dot">${i+1}</div><div class="tx"><b>${esc(it.title)}</b>${it.details?`<div>${esc(it.details)}</div>`:''}<div style="margin-top:4px" class="meta">${it.date?`<span class="tag gray">${fmtDate(it.date)}</span> `:''}${it.school?`<span class="tag gold">${SCHOOLS[it.school]}</span>`:''}</div></div>
+      <div class="ac"><button class="btn sm ghost" title="أعلى" data-act="item-up" data-sec="${s.id}" data-i="${i}" ${i===0?'disabled':''}>▲</button><button class="btn sm" data-act="edit-item" data-sec="${s.id}" data-i="${i}">تعديل</button><button class="btn sm danger" data-act="del-item" data-sec="${s.id}" data-i="${i}">حذف</button></div></div>`).join('')}</div>`
+      :`<p class="muted" style="margin:0">أضيفي البنود المكتوبة لهذا القسم (مثل: مهمة، إنجاز، نتيجة) — ستظهر في جدول عند الطباعة.</p>`}
+  </div>
+  <div class="card mt"><div class="row" style="margin-bottom:12px"><h3 style="margin:0;flex:1">شواهد القسم <span class="muted" style="font-weight:400;font-size:13px">(${evs.length})</span></h3></div>
+    ${evs.length?`<div class="ev-grid">${evs.map(evCard).join('')}</div>`:emptyEv(s.id)}
+  </div>`;
+}
+function vEvidence(s){
+  const opts = state.sections.map(x=>`<option value="${x.id}" ${filt.section===x.id?'selected':''}>${esc(x.title)}</option>`).join('');
+  return `<div class="sec-head"><div class="badge">${secNum(s.id)}</div><div><h2>${esc(s.title)}</h2><p>ابحثي وصفّي الشواهد حسب القسم والتاريخ والمدرسة.</p></div>
+    <div class="acts"><button class="btn pri" data-act="add-ev">＋ شاهد جديد</button><button class="btn" data-act="print-filtered">⎙ طباعة النتائج</button></div></div>
+  <div class="card mb">
+    <div class="filters">
+      <div class="field f-q"><label>بحث</label><input type="search" id="fq" placeholder="ابحثي في العنوان أو الوصف أو أسماء الملفات" value="${esc(filt.q)}"></div>
+      <div class="field"><label>القسم</label><select id="fs"><option value="">كل الأقسام</option>${opts}</select></div>
+      <div class="field"><label>المدرسة</label><select id="fsc"><option value="">الكل</option>${Object.entries(SCHOOLS).map(([k,v])=>`<option value="${k}" ${filt.school===k?'selected':''}>${v}</option>`).join('')}</select></div>
+      <div class="field"><label>من تاريخ</label><input type="date" id="ff" value="${filt.from}"></div>
+      <div class="field"><label>إلى تاريخ</label><input type="date" id="ft" value="${filt.to}"></div>
+      <div class="field"><label>الترتيب</label><select id="fo"><option value="new" ${filt.sort==='new'?'selected':''}>الأحدث أولًا</option><option value="old" ${filt.sort==='old'?'selected':''}>الأقدم أولًا</option><option value="title" ${filt.sort==='title'?'selected':''}>حسب العنوان</option><option value="sec" ${filt.sort==='sec'?'selected':''}>حسب القسم</option></select></div>
+    </div>
+    <div class="row"><span class="muted" id="fcount"></span><span style="flex:1"></span><button class="btn sm" id="freset">مسح التصفية</button></div>
+  </div>
+  <div id="evList"></div>`;
+}
+function filtered(){
+  const q = filt.q.trim().toLowerCase();
+  let L = state.evidence.filter(e=>{
+    if(filt.section && e.section!==filt.section) return false;
+    if(filt.school){ if(filt.school==='both' ? e.school!=='both' : !(e.school===filt.school)) return false; }
+    if(filt.from && (e.date||'')<filt.from) return false;
+    if(filt.to && (e.date||'')>filt.to) return false;
+    if(q){ const hay=(e.title+' '+(e.desc||'')+' '+(e.files||[]).map(f=>f.name).join(' ')+' '+secTitle(e.section)).toLowerCase(); if(!hay.includes(q)) return false; }
+    return true;
+  });
+  const cmp = {new:(a,b)=>(b.date||'').localeCompare(a.date||'')||b.createdAt-a.createdAt, old:(a,b)=>(a.date||'').localeCompare(b.date||''), title:(a,b)=>a.title.localeCompare(b.title,'ar'), sec:(a,b)=>secNum(a.section)-secNum(b.section)||(b.date||'').localeCompare(a.date||'')}[filt.sort];
+  return L.sort(cmp);
+}
+function renderEvList(){
+  const L = filtered();
+  $('#fcount').textContent = `${L.length} من ${state.evidence.length} شاهد`;
+  $('#evList').innerHTML = state.evidence.length===0 ? emptyEv() : L.length ? `<div class="ev-grid">${L.map(evCard).join('')}</div>` : `<div class="empty"><b>لا توجد نتائج مطابقة</b>جرّبي تغيير كلمات البحث أو التصفية.</div>`;
+  hydrateThumbs();
+}
+function bindFilters(){
+  const upd = () => { filt.q=$('#fq').value; filt.section=$('#fs').value; filt.school=$('#fsc').value; filt.from=$('#ff').value; filt.to=$('#ft').value; filt.sort=$('#fo').value; renderEvList(); };
+  ['#fq'].forEach(s=>$(s).addEventListener('input',upd));
+  ['#fs','#fsc','#ff','#ft','#fo'].forEach(s=>$(s).addEventListener('change',upd));
+  $('#freset').onclick = () => { Object.assign(filt,{q:'',section:'',school:'',from:'',to:'',sort:'new'}); render(); };
+  renderEvList();
+}
+function evCard(e){
+  const files = e.files||[];
+  const img = files.find(f=>isImg(f.type));
+  const pdf = files.find(f=>isPdf(f.type,f.name));
+  const ph = img ? `<img data-thumb="${img.id}" alt="">` : `<div class="ph">${pdf?ICON.pdf:files.length?ICON.doc:ICON.none}<span>${pdf?'ملف PDF':files.length?'ملف مرفق':'بدون مرفقات'}</span></div>`;
+  return `<div class="ev">
+    <div class="th" data-act="view-ev" data-id="${e.id}">${ph}${files.length?`<span class="fc">${files.length} ملف</span>`:''}</div>
+    <div class="bd">
+      <div class="tt" data-act="view-ev" data-id="${e.id}">${esc(e.title)}</div>
+      <div class="meta"><span class="tag">${esc(secTitle(e.section))}</span><span class="tag gold">${SCHOOLS[e.school]||'—'}</span></div>
+      <div class="muted" style="font-size:12.5px">📅 ${fmtDate(e.date)}</div>
+      ${e.desc?`<div class="ds">${esc(e.desc)}</div>`:''}
+    </div>
+    <div class="ft"><button class="btn sm" data-act="view-ev" data-id="${e.id}">معاينة</button><button class="btn sm" data-act="edit-ev" data-id="${e.id}">تعديل</button><span style="flex:1"></span><button class="btn sm danger" data-act="del-ev" data-id="${e.id}">حذف</button></div>
+  </div>`;
+}
+async function hydrateThumbs(){
+  for(const img of $$('img[data-thumb]')){
+    if(img.src) continue;
+    const u = await fileURL(img.dataset.thumb).catch(()=>null);
+    if(u) img.src = u; else img.replaceWith(Object.assign(document.createElement('div'),{className:'ph',innerHTML:ICON.none+'<span>الملف غير متاح</span>'}));
+  }
+}
+function vReports(){
+  const secs = state.sections;
+  return `<div class="card">
+    <h2>طباعة وتصدير التقارير</h2>
+    <p class="muted" style="margin-top:-4px">لتصدير PDF: اضغطي «تصدير PDF» ثم اختاري <b>«حفظ بتنسيق PDF»</b> (Save as PDF) في نافذة الطباعة. التنسيق مُعد لورق A4 بشكل رسمي ويتضمن اسم الموظفة والمسمى الوظيفي والعام الدراسي.</p>
+    <div class="row mb"><button class="btn pri" data-act="print-all">⎙ طباعة السجل كاملًا</button><button class="btn gold" data-act="pdf-all">⤓ تصدير السجل PDF</button></div>
+    <hr class="s">
+    <h3>طباعة أقسام محددة</h3>
+    <div class="chks" id="repSecs">${secs.map(s=>`<label class="chk"><input type="checkbox" value="${s.id}" checked> ${secNum(s.id)}. ${esc(s.title)} <span class="muted" style="margin-inline-start:auto;font-size:12.5px">${s.kind==='profile'?'':s.kind==='evidence'?state.evidence.length+' شاهد':evOf(s.id).length+' شاهد'}</span></label>`).join('')}</div>
+    <div class="row mt"><button class="btn sm" id="repAll">تحديد الكل</button><button class="btn sm" id="repNone">إلغاء التحديد</button></div>
+    <hr class="s">
+    <h3>خيارات الطباعة</h3>
+    <div class="chks">
+      <label class="chk"><input type="checkbox" id="oCover" checked> صفحة غلاف</label>
+      <label class="chk"><input type="checkbox" id="oStats" checked> ملخص الإحصائيات</label>
+      <label class="chk"><input type="checkbox" id="oImgs" checked> إظهار صور الشواهد</label>
+      <label class="chk"><input type="checkbox" id="oSign" checked> خانات التوقيع</label>
+    </div>
+    <div class="row mt"><button class="btn pri" data-act="print-sel">⎙ طباعة الأقسام المحددة</button><button class="btn" data-act="pdf-sel">⤓ تصدير المحدد PDF</button></div>
+  </div>
+  <div class="card mt"><h3>طباعة قسم منفرد</h3>
+    <div class="items">${secs.map(s=>`<div class="item"><div class="dot">${secNum(s.id)}</div><div class="tx"><b>${esc(s.title)}</b></div><div class="ac"><button class="btn sm" data-act="print-sec" data-sec="${s.id}">⎙ طباعة</button></div></div>`).join('')}</div>
+  </div>
+  <p class="muted" style="font-size:13px">ملاحظة: صور الشواهد تُطبع داخل التقرير، أما ملفات PDF المرفقة فيُذكر اسمها في التقرير ويمكن طباعتها منفصلة من نافذة معاينة الشاهد.</p>`;
+}
+function vSettings(){
+  const st = state.settings;
+  const custom = state.sections;
+  return `<div class="grid g2">
+    <div class="card"><h2>النسخ الاحتياطي والاستعادة</h2>
+      <p class="muted" style="margin-top:-4px">النسخة الاحتياطية ملف واحد (JSON) يحتوي جميع البيانات والصور وملفات PDF. احفظيه في مكان آمن (Google Drive أو بريدكِ أو ذاكرة خارجية).</p>
+      <dl class="kv mb"><dt>آخر نسخة احتياطية</dt><dd>${fmtDT(state.meta.lastBackup)}</dd><dt>آخر تعديل</dt><dd>${state.meta.lastChange?fmtDT(state.meta.lastChange):'—'}</dd><dt>مساحة التخزين</dt><dd id="usage">جارٍ الحساب…</dd></dl>
+      <div class="row"><button class="btn pri" data-act="backup">⤓ تصدير نسخة احتياطية</button><button class="btn" data-act="import">⤒ استيراد نسخة احتياطية</button></div>
+      <hr class="s">
+      <div class="field"><label>التذكير بعمل نسخة احتياطية</label>
+        <select id="remDays">${[[1,'يوميًا'],[3,'كل 3 أيام'],[7,'أسبوعيًا'],[14,'كل أسبوعين'],[30,'شهريًا'],[0,'إيقاف التذكير']].map(([v,l])=>`<option value="${v}" ${st.reminderDays==v?'selected':''}>${l}</option>`).join('')}</select>
+      </div>
+      <div class="row mt"><button class="btn sm" data-act="persist">طلب تخزين دائم من المتصفح</button><span class="muted" style="font-size:12.5px" id="persistState"></span></div>
+    </div>
+    <div class="card"><h2>معلومات مهمة عن الحفظ</h2>
+      <ul style="margin:0;padding-inline-start:18px;line-height:2">
+        <li>البيانات محفوظة <b>محليًا</b> على هذا الجهاز وهذا المتصفح فقط.</li>
+        <li>لا تنتقل تلقائيًا إلى جهاز أو متصفح آخر، ولا تُرفع لأي خادم.</li>
+        <li>تبقى محفوظة عند إغلاق المتصفح أو تحديث الصفحة.</li>
+        <li>قد تُحذف إذا مُسحت «بيانات المواقع» من إعدادات المتصفح، أو عند استخدام التصفح الخاص.</li>
+        <li>لنقل السجل: صدّري نسخة احتياطية ثم استورديها في الجهاز الآخر.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card mt"><h2>كلمة المرور والقفل</h2>
+    <form id="pwForm" class="form" autocomplete="off">
+      <div class="field"><label>كلمة المرور الحالية</label><input type="password" name="cur" required autocomplete="current-password"></div>
+      <div class="field"></div>
+      <div class="field"><label>كلمة المرور الجديدة</label><input type="password" name="nw" required minlength="4" autocomplete="new-password"></div>
+      <div class="field"><label>تأكيد كلمة المرور الجديدة</label><input type="password" name="nw2" required minlength="4" autocomplete="new-password"></div>
+      <div class="full row"><button class="btn pri" type="submit">تغيير كلمة المرور</button></div>
+    </form>
+    <hr class="s">
+    <div class="field" style="max-width:320px"><label>القفل التلقائي عند عدم الاستخدام</label>
+      <select id="autoLock">${[[5,'بعد 5 دقائق'],[15,'بعد 15 دقيقة'],[30,'بعد 30 دقيقة'],[60,'بعد ساعة'],[0,'عدم القفل التلقائي']].map(([v,l])=>`<option value="${v}" ${Lock.cfg().auto==v?'selected':''}>${l}</option>`).join('')}</select></div>
+  </div>
+  <div class="card mt"><div class="row" style="margin-bottom:12px"><h2 style="margin:0;flex:1">إدارة الأقسام</h2><button class="btn pri sm" data-act="add-sec">＋ قسم جديد</button></div>
+    <div class="items">${custom.map((s,i)=>`<div class="item"><div class="dot">${i+1}</div><div class="tx"><b>${esc(s.title)}</b><div>${s.custom?'قسم مضاف':'قسم أساسي'} · ${evOf(s.id).length} شاهد · ${(s.items||[]).length} بند</div></div>
+      <div class="ac">${i>1&&s.kind!=='evidence'&&state.sections[i-1].kind!=='profile'?`<button class="btn sm ghost" data-act="sec-up" data-sec="${s.id}" title="أعلى">▲</button>`:''}<button class="btn sm" data-act="ren-sec" data-sec="${s.id}">إعادة تسمية</button>${s.custom?`<button class="btn sm danger" data-act="del-sec" data-sec="${s.id}">حذف</button>`:''}</div></div>`).join('')}</div>
+  </div>
+  <div class="card mt" style="border-color:#ecc9c9"><h2 style="color:var(--danger)">منطقة الخطر</h2>
+    <p class="muted" style="margin-top:-4px">حذف جميع البيانات من هذا المتصفح نهائيًا. يُنصح بتصدير نسخة احتياطية أولًا.</p>
+    <button class="btn danger" data-act="wipe">حذف جميع البيانات</button>
+  </div>`;
+}
+
+/* ============ Reminder ============ */
+function reminderBanner(){
+  const d = +state.settings.reminderDays;
+  if(!d || !state.meta.lastChange) return '';
+  if(state.meta.lastBackup >= state.meta.lastChange) return '';
+  if(Date.now() < state.settings.snoozeUntil) return '';
+  const ref = state.meta.lastBackup || state.meta.created;
+  const days = Math.floor((Date.now()-ref)/86400000);
+  if(days < d) return '';
+  return `<div class="banner warn">⏰ <span>${state.meta.lastBackup?`مضى ${days} يومًا على آخر نسخة احتياطية`:'لم تُصدِّري أي نسخة احتياطية بعد'}، ولديكِ تعديلات غير محفوظة في نسخة. احمي سجلكِ بتصدير نسخة الآن.</span><span class="sp"></span><button class="btn sm pri" data-act="backup">تصدير الآن</button><button class="btn sm" data-act="snooze">ذكّريني غدًا</button></div>`;
+}
+
+/* ============ Modal ============ */
+function openModal(html, size=''){ const m=$('#modal'); m.className='modal '+size; m.innerHTML=html; $('#ov').classList.add('show'); document.body.style.overflow='hidden'; }
+function closeModal(){ $('#ov').classList.remove('show'); document.body.style.overflow=''; $('#modal').innerHTML=''; }
+function confirmBox(msg, okText='تأكيد', danger=true){
+  return new Promise(res=>{
+    openModal(`<div class="mh"><h3>تأكيد</h3><button class="x" id="cx">×</button></div><div class="mb2">${msg}</div>
+      <div class="mf"><button class="btn ${danger?'danger':'pri'}" id="cok">${okText}</button><button class="btn" id="cno">إلغاء</button></div>`,'sm');
+    $('#cok').onclick=()=>{closeModal();res(true)}; $('#cno').onclick=$('#cx').onclick=()=>{closeModal();res(false)};
+  });
+}
+function promptBox(title, label, val=''){
+  return new Promise(res=>{
+    openModal(`<div class="mh"><h3>${title}</h3><button class="x" id="cx">×</button></div><div class="mb2"><div class="field"><label>${label}</label><input type="text" id="pin" value="${esc(val)}"></div></div>
+      <div class="mf"><button class="btn pri" id="cok">حفظ</button><button class="btn" id="cno">إلغاء</button></div>`,'sm');
+    const i=$('#pin'); i.focus(); i.select();
+    const ok=()=>{const v=i.value.trim(); closeModal(); res(v||null)};
+    $('#cok').onclick=ok; i.onkeydown=e=>{if(e.key==='Enter')ok()}; $('#cno').onclick=$('#cx').onclick=()=>{closeModal();res(null)};
+  });
+}
+
+/* ============ Evidence editor ============ */
+let draft = null; // {id?, files:[existing meta], add:[{id,file}], remove:[ids]}
+function evForm(e, presetSec){
+  const isNew = !e;
+  e = e || {title:'',desc:'',date:todayISO(),section:presetSec||'admin',school:'both',files:[]};
+  draft = {id:e.id, keep:[...(e.files||[])], add:[], remove:[]};
+  const opts = state.sections.map(s=>`<option value="${s.id}" ${e.section===s.id?'selected':''}>${secNum(s.id)}. ${esc(s.title)}</option>`).join('');
+  openModal(`<div class="mh"><h3>${isNew?'إضافة شاهد جديد':'تعديل الشاهد'}</h3><button class="x" data-close>×</button></div>
+  <form id="evForm"><div class="mb2"><div class="form">
+    <div class="field full"><label>عنوان الشاهد <span class="req">*</span></label><input type="text" name="title" required maxlength="200" value="${esc(e.title)}" placeholder="مثال: تقرير متابعة دخول الطالبات على منصة مدرستي"></div>
+    <div class="field"><label>القسم المرتبط <span class="req">*</span></label><select name="section" required>${opts}</select></div>
+    <div class="field"><label>التاريخ <span class="req">*</span></label><input type="date" name="date" required value="${e.date||''}"><span class="muted" id="hijriHint" style="font-size:12px"></span></div>
+    <div class="field full"><label>المدرسة <span class="req">*</span></label>
+      <div class="row">${Object.entries(SCHOOLS).map(([k,v])=>`<label class="chk"><input type="radio" name="school" value="${k}" ${e.school===k?'checked':''}> ${v}</label>`).join('')}</div></div>
+    <div class="field full"><label>وصف الشاهد</label><textarea name="desc" rows="4" placeholder="اكتبي وصفًا للشاهد: ما الذي تم؟ ما هدفه؟ ما أثره؟">${esc(e.desc||'')}</textarea></div>
+    <div class="field full"><label>المرفقات (صور، PDF، أو ملفات Word)</label>
+      <div class="drop" id="drop">⤒ اسحبي الملفات هنا أو <b style="color:var(--pri)">اضغطي للاختيار</b><div style="font-size:12.5px">يمكن اختيار أكثر من ملف — تُحفظ في المتصفح (IndexedDB)</div></div>
+      <input type="file" id="fileIn" multiple accept="image/*,application/pdf,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx" hidden>
+      <div class="files" id="fileList"></div></div>
+  </div></div>
+  <div class="mf"><button class="btn pri" type="submit">${isNew?'حفظ الشاهد':'حفظ التعديلات'}</button><button class="btn" type="button" data-close>إلغاء</button></div></form>`);
+  const di = $('[name=date]');
+  const hint = () => { $('#hijriHint').textContent = di.value ? fmtDate(di.value) : ''; };
+  di.addEventListener('input',hint); hint();
+  const drop=$('#drop'), fi=$('#fileIn');
+  drop.onclick=()=>fi.click();
+  fi.onchange=()=>{ addFiles(fi.files); fi.value=''; };
+  ['dragenter','dragover'].forEach(t=>drop.addEventListener(t,ev=>{ev.preventDefault();drop.classList.add('hover')}));
+  ['dragleave','drop'].forEach(t=>drop.addEventListener(t,ev=>{ev.preventDefault();drop.classList.remove('hover')}));
+  drop.addEventListener('drop',ev=>addFiles(ev.dataTransfer.files));
+  $('#evForm').onsubmit = ev => { ev.preventDefault(); saveEv(new FormData(ev.target)); };
+  renderDraftFiles();
+}
+function addFiles(list){
+  for(const f of list){
+    if(f.size > 50*1024*1024){ toast(`الملف «${f.name}» أكبر من 50 م.ب`,'err'); continue; }
+    draft.add.push({id:uid(), file:f, url:isImg(f.type)?URL.createObjectURL(f):null});
+  }
+  renderDraftFiles();
+}
+async function renderDraftFiles(){
+  const row = (id,name,type,size,url,kind) => `<div class="file">${url?`<img src="${url}">`:`<div class="fi">${isPdf(type,name)?'PDF':'ملف'}</div>`}<span class="nm" title="${esc(name)}">${esc(name)}</span><span class="muted">${fmtSize(size)}</span>${kind==='new'?'<span class="tag gold">جديد</span>':''}<button type="button" class="btn sm danger" data-rm="${id}" data-k="${kind}">إزالة</button></div>`;
+  let h = '';
+  for(const f of draft.keep){ const u = isImg(f.type) ? await fileURL(f.id).catch(()=>null) : null; h += row(f.id,f.name,f.type,f.size,u,'old'); }
+  for(const a of draft.add) h += row(a.id,a.file.name,a.file.type,a.file.size,a.url,'new');
+  const el = $('#fileList'); if(!el) return;
+  el.innerHTML = h || '<span class="muted" style="font-size:13px">لا توجد مرفقات.</span>';
+  $$('[data-rm]',el).forEach(b=>b.onclick=()=>{
+    const id=b.dataset.rm;
+    if(b.dataset.k==='old'){ draft.keep=draft.keep.filter(f=>f.id!==id); draft.remove.push(id); }
+    else { const a=draft.add.find(x=>x.id===id); if(a&&a.url) URL.revokeObjectURL(a.url); draft.add=draft.add.filter(x=>x.id!==id); }
+    renderDraftFiles();
+  });
+}
+async function saveEv(fd){
+  const title = fd.get('title').trim();
+  if(!title) return toast('اكتبي عنوان الشاهد','err');
+  if(!fd.get('school')) return toast('حددي المدرسة','err');
+  const btn = $('#evForm [type=submit]'); btn.disabled=true; btn.textContent='جارٍ الحفظ…';
+  try{
+    const newMeta = [];
+    for(const a of draft.add){
+      await FileDB.put({id:a.id, name:a.file.name, type:a.file.type||'application/octet-stream', size:a.file.size, blob:a.file});
+      newMeta.push({id:a.id, name:a.file.name, type:a.file.type||'application/octet-stream', size:a.file.size});
+      if(a.url) URL.revokeObjectURL(a.url);
+    }
+    for(const id of draft.remove){ await FileDB.del(id); dropURL(id); }
+    const data = {title, desc:fd.get('desc').trim(), date:fd.get('date'), section:fd.get('section'), school:fd.get('school'), files:[...draft.keep, ...newMeta], updatedAt:Date.now()};
+    if(draft.id){ Object.assign(state.evidence.find(e=>e.id===draft.id), data); }
+    else state.evidence.push({id:uid(), createdAt:Date.now(), ...data});
+    save(); closeModal(); render(); toast(draft.id?'تم تحديث الشاهد':'تمت إضافة الشاهد','ok');
+  }catch(err){
+    console.error(err); btn.disabled=false; btn.textContent='حفظ';
+    toast('تعذّر حفظ الملفات: '+(err&&err.name==='QuotaExceededError'?'المساحة ممتلئة':err.message||err),'err');
+  }
+}
+async function viewEv(id){
+  const e = state.evidence.find(x=>x.id===id); if(!e) return;
+  openModal(`<div class="mh"><h3>${esc(e.title)}</h3><button class="x" data-close>×</button></div>
+  <div class="mb2">
+    <div class="pv-meta"><span class="tag">${esc(secTitle(e.section))}</span><span class="tag gold">${SCHOOLS[e.school]||''}</span><span class="tag gray">📅 ${fmtDate(e.date)}</span></div>
+    ${e.desc?`<div class="pv-desc">${esc(e.desc)}</div>`:''}
+    <div id="pvFiles">${(e.files||[]).length?'<p class="muted">جارٍ تحميل المرفقات…</p>':'<p class="muted">لا توجد مرفقات لهذا الشاهد.</p>'}</div>
+  </div>
+  <div class="mf"><button class="btn pri" data-act="edit-ev" data-id="${e.id}">تعديل</button><button class="btn" data-act="print-ev" data-id="${e.id}">⎙ طباعة الشاهد</button><button class="btn danger" data-act="del-ev" data-id="${e.id}">حذف</button><span style="flex:1"></span><button class="btn" data-close>إغلاق</button></div>`,'lg');
+  let h='';
+  for(const f of e.files||[]){
+    const u = await fileURL(f.id).catch(()=>null);
+    const head = `<div class="h"><span>📎 ${esc(f.name)} <span class="muted">(${fmtSize(f.size)})</span></span>${u?`<a class="btn sm" href="${u}" target="_blank" rel="noopener">فتح في نافذة</a><a class="btn sm" href="${u}" download="${esc(f.name)}">تنزيل</a>`:''}</div>`;
+    if(!u) h += `<div class="pv-file">${head}<p class="muted" style="padding:10px">الملف غير موجود في هذا المتصفح.</p></div>`;
+    else if(isImg(f.type)) h += `<div class="pv-file">${head}<img src="${u}" alt=""></div>`;
+    else if(isPdf(f.type,f.name)) h += `<div class="pv-file">${head}<iframe src="${u}" title="${esc(f.name)}"></iframe></div>`;
+    else h += `<div class="pv-file">${head}<p class="muted" style="padding:10px 12px;margin:0">لا يمكن معاينة هذا النوع داخل المتصفح — استخدمي «تنزيل» لفتحه.</p></div>`;
+  }
+  const pf=$('#pvFiles'); if(pf && h) pf.innerHTML=h;
+}
+async function delEv(id){
+  const e = state.evidence.find(x=>x.id===id); if(!e) return;
+  if(!await confirmBox(`هل تريدين حذف الشاهد «<b>${esc(e.title)}</b>» ومرفقاته نهائيًا؟`,'حذف')) return;
+  for(const f of e.files||[]){ await FileDB.del(f.id).catch(()=>{}); dropURL(f.id); }
+  state.evidence = state.evidence.filter(x=>x.id!==id);
+  save(); render(); toast('تم حذف الشاهد');
+}
+
+/* ============ Items ============ */
+function itemForm(secId, i){
+  const s = sec(secId); const it = i!=null ? s.items[i] : {title:'',details:'',date:'',school:''};
+  openModal(`<div class="mh"><h3>${i!=null?'تعديل بند':'إضافة بند'} — ${esc(s.title)}</h3><button class="x" data-close>×</button></div>
+  <form id="itForm"><div class="mb2"><div class="form">
+    <div class="field full"><label>العنوان <span class="req">*</span></label><input type="text" name="title" required value="${esc(it.title)}"></div>
+    <div class="field full"><label>التفاصيل</label><textarea name="details" rows="4">${esc(it.details)}</textarea></div>
+    <div class="field"><label>التاريخ (اختياري)</label><input type="date" name="date" value="${it.date||''}"></div>
+    <div class="field"><label>المدرسة (اختياري)</label><select name="school"><option value="">—</option>${Object.entries(SCHOOLS).map(([k,v])=>`<option value="${k}" ${it.school===k?'selected':''}>${v}</option>`).join('')}</select></div>
+  </div></div><div class="mf"><button class="btn pri" type="submit">حفظ</button><button class="btn" type="button" data-close>إلغاء</button></div></form>`);
+  $('#itForm').onsubmit = ev => {
+    ev.preventDefault(); const fd=new FormData(ev.target);
+    const d = {title:fd.get('title').trim(), details:fd.get('details').trim(), date:fd.get('date'), school:fd.get('school')};
+    if(!d.title) return;
+    s.items = s.items||[];
+    if(i!=null) s.items[i]=d; else s.items.push(d);
+    save(); closeModal(); render(); toast('تم حفظ البند','ok');
+  };
+}
+
+/* ============ Backup ============ */
+const blobToDataURL = b => new Promise((res,rej)=>{ const r=new FileReader(); r.onload=()=>res(r.result); r.onerror=()=>rej(r.error); r.readAsDataURL(b); });
+async function exportBackup(){
+  toast('جارٍ تجهيز النسخة الاحتياطية…');
+  try{
+    const files=[];
+    const ids = new Set(state.evidence.flatMap(e=>(e.files||[]).map(f=>f.id)));
+    for(const id of ids){ const r=await FileDB.get(id); if(r) files.push({id:r.id,name:r.name,type:r.type,size:r.size,data:await blobToDataURL(r.blob)}); }
+    state.meta.lastBackup = Date.now(); state.settings.snoozeUntil = 0;
+    const payload = {app:'fz-achievement-record', version:1, exportedAt:new Date().toISOString(), state, files};
+    const blob = new Blob([JSON.stringify(payload)],{type:'application/json'});
+    const a = document.createElement('a'); a.href=URL.createObjectURL(blob);
+    a.download = `نسخة-سجل-الإنجاز-${(state.profile.name||'').replace(/\s+/g,'-')}-${todayISO()}.json`;
+    document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href),5000);
+    save(false); render(); toast(`تم تصدير النسخة (${state.evidence.length} شاهد، ${files.length} ملف)`,'ok');
+  }catch(err){ console.error(err); toast('تعذّر التصدير: '+err.message,'err'); }
+}
+async function importBackup(file){
+  let p;
+  try{ p = JSON.parse(await file.text()); }catch(e){ return toast('الملف غير صالح','err'); }
+  if(p.app!=='fz-achievement-record' || !p.state) return toast('هذا الملف ليس نسخة احتياطية لسجل الإنجاز','err');
+  const n = (p.state.evidence||[]).length;
+  openModal(`<div class="mh"><h3>استيراد نسخة احتياطية</h3><button class="x" data-close>×</button></div>
+    <div class="mb2"><p>تحتوي النسخة على <b>${n}</b> شاهد و<b>${(p.files||[]).length}</b> ملف${p.exportedAt?`، صُدّرت بتاريخ ${fmtDT(Date.parse(p.exportedAt))}`:''}.</p>
+    <label class="chk" style="margin-bottom:8px"><input type="radio" name="im" value="replace" checked> <span><b>استبدال</b> — حذف البيانات الحالية واستعادة النسخة كما هي</span></label>
+    <label class="chk"><input type="radio" name="im" value="merge"> <span><b>دمج</b> — إضافة شواهد النسخة إلى السجل الحالي (مع تحديث المتشابه)</span></label></div>
+    <div class="mf"><button class="btn pri" id="imOk">استيراد</button><button class="btn" data-close>إلغاء</button></div>`,'sm');
+  $('#imOk').onclick = async () => {
+    const mode = $('[name=im]:checked').value;
+    $('#imOk').disabled=true; $('#imOk').textContent='جارٍ الاستيراد…';
+    try{
+      if(mode==='replace'){ await FileDB.clear(); urlCache.forEach(u=>URL.revokeObjectURL(u)); urlCache.clear(); }
+      for(const f of p.files||[]){ const blob = await (await fetch(f.data)).blob(); await FileDB.put({id:f.id,name:f.name,type:f.type,size:f.size,blob}); dropURL(f.id); }
+      if(mode==='replace'){ state = p.state; load2(); }
+      else{
+        const ps=p.state;
+        (ps.sections||[]).forEach(s=>{ const cur=sec(s.id); if(!cur) state.sections.push(s); else{ if(!cur.intro&&s.intro) cur.intro=s.intro; const titles=new Set((cur.items||[]).map(i=>i.title)); (s.items||[]).forEach(i=>{ if(!titles.has(i.title)) (cur.items=cur.items||[]).push(i); }); } });
+        (ps.evidence||[]).forEach(e=>{ const i=state.evidence.findIndex(x=>x.id===e.id); if(i>=0) state.evidence[i]=e; else state.evidence.push(e); });
+        Object.keys(ps.profile||{}).forEach(k=>{ if(!state.profile[k] && ps.profile[k]) state.profile[k]=ps.profile[k]; });
+      }
+      state.meta.lastBackup = Date.now(); save(); closeModal(); render(); toast('تم الاستيراد بنجاح','ok');
+    }catch(err){ console.error(err); toast('تعذّر الاستيراد: '+err.message,'err'); closeModal(); }
+  };
+}
+function load2(){ // normalise after replace
+  const s=state; state=null; localStorage.setItem(KEY,JSON.stringify(s)); load();
+}
+
+/* ============ Printing ============ */
+function pHead(){
+  const p=state.profile;
+  return `<div class="p-head"><div class="r">المملكة العربية السعودية<br>وزارة التعليم<br>${esc(p.department||'')}</div>
+    <div class="c">${esc(p.org)}<br><span style="font-size:11pt;font-weight:500">العام الدراسي ${esc(p.year)}</span></div>
+    <div class="l">الاسم: ${esc(p.name)}<br>الوظيفة: ${esc(p.title)}<br>تاريخ الطباعة: ${fmtDate(todayISO()).split(' — ')[0]}</div></div>`;
+}
+function pInfo(){
+  const p=state.profile;
+  return `<table class="p-info"><tr><td class="k">الاسم</td><td>${esc(p.name)}</td><td class="k">المسمى الوظيفي</td><td>${esc(p.title)}</td></tr>
+  <tr><td class="k">جهة العمل</td><td>${esc(p.org)}</td><td class="k">العام الدراسي</td><td>${esc(p.year)}</td></tr></table>`;
+}
+function pSign(){ const p=state.profile; return `<div class="p-sign"><div>الموظفة<br><b>${esc(p.name)}</b><br>التوقيع: ....................</div><div>مديرة المدرسة<br><b>${esc(p.principal||'')}</b><br>التوقيع: ....................</div></div>`; }
+async function pEvidence(list, imgs){
+  if(!list.length) return '<p class="p-none">لا توجد شواهد.</p>';
+  let h='';
+  for(const [i,e] of list.entries()){
+    const im = imgs ? (e.files||[]).filter(f=>isImg(f.type)) : [];
+    const others = (e.files||[]).filter(f=>!isImg(f.type) || !imgs);
+    let ims='';
+    for(const f of im){ const u=await fileURL(f.id).catch(()=>null); if(u) ims+=`<img src="${u}">`; }
+    h += `<div class="p-ev"><div class="t">${i+1}. ${esc(e.title)}</div>
+      <div class="m">القسم: ${esc(secTitle(e.section))} · المدرسة: ${SCHOOLS[e.school]||''} · التاريخ: ${fmtDate(e.date)}</div>
+      ${e.desc?`<div class="d">${esc(e.desc)}</div>`:''}
+      ${ims?`<div class="p-imgs">${ims}</div>`:''}
+      ${others.length?`<div class="p-files">المرفقات: ${others.map(f=>esc(f.name)).join('، ')}</div>`:''}</div>`;
+  }
+  return h;
+}
+function pStats(){
+  const k=counts();
+  return `<div class="p-sub">ملخص الإحصائيات</div><div class="p-stats">
+  <div><b>${k.total}</b>إجمالي الشواهد</div><div><b>${k.admin}</b>الإنجازات الإدارية</div><div><b>${k.tech}</b>الشواهد التقنية</div>
+  <div><b>${k.initiatives}</b>المبادرات</div><div><b>${k.pd}</b>الدورات التدريبية</div><div><b>${k.madrasati}</b>منصة مدرستي</div>
+  <div><b>${k.s1}</b>المتوسطة الأولى</div><div><b>${k.s2}</b>المتوسطة الثانية</div><div><b>${k.both}</b>مشتركة بين المدرستين</div></div>
+  <table class="p-tbl"><tr><th>القسم</th><th>عدد الشواهد</th><th>عدد البنود</th></tr>${state.sections.filter(s=>s.kind!=='evidence').map(s=>`<tr><td>${esc(s.title)}</td><td style="text-align:center">${evOf(s.id).length}</td><td style="text-align:center">${(s.items||[]).length}</td></tr>`).join('')}</table>`;
+}
+async function pSection(s, o){
+  let h = `<div class="p-sec">${secNum(s.id)}. ${esc(s.title)}</div>`;
+  if(s.kind==='profile'){
+    const p=state.profile;
+    h += `<table class="p-tbl">${PROFILE_FIELDS.filter(([k])=>p[k]).map(([k,l])=>`<tr><td style="width:30%;font-weight:700;background:#eaf1f2">${l}</td><td>${k==='startDate'?fmtDate(p[k]):esc(p[k])}</td></tr>`).join('')}</table>`;
+    if(p.bio) h+=`<div class="p-sub">نبذة مهنية</div><div class="p-intro">${esc(p.bio)}</div>`;
+    const ev=evOf(s.id); if(ev.length) h+=`<div class="p-sub">الشواهد</div>`+await pEvidence(ev,o.imgs);
+    return h;
+  }
+  if(s.kind==='evidence'){
+    const all=[...state.evidence].sort((a,b)=>secNum(a.section)-secNum(b.section)||(a.date||'').localeCompare(b.date||''));
+    h += `<table class="p-tbl"><tr><th>م</th><th>عنوان الشاهد</th><th>القسم</th><th>المدرسة</th><th>التاريخ</th><th>المرفقات</th></tr>${all.map((e,i)=>`<tr><td style="text-align:center">${i+1}</td><td>${esc(e.title)}</td><td>${esc(secTitle(e.section))}</td><td>${SCHOOLS[e.school]||''}</td><td style="white-space:nowrap">${fmtDate(e.date).split(' — ')[0]}</td><td style="text-align:center">${(e.files||[]).length}</td></tr>`).join('')||'<tr><td colspan="6" style="text-align:center">لا توجد شواهد</td></tr>'}</table>`;
+    return h;
+  }
+  if(s.intro) h += `<div class="p-intro">${esc(s.intro)}</div>`;
+  const items=s.items||[];
+  if(items.length) h += `<table class="p-tbl"><tr><th style="width:6%">م</th><th style="width:30%">البند</th><th>التفاصيل</th><th style="width:16%">المدرسة / التاريخ</th></tr>${items.map((it,i)=>`<tr><td style="text-align:center">${i+1}</td><td><b>${esc(it.title)}</b></td><td style="white-space:pre-wrap">${esc(it.details)}</td><td>${it.school?SCHOOLS[it.school]:''}${it.date?'<br>'+fmtDate(it.date).split(' — ')[0]:''}</td></tr>`).join('')}</table>`;
+  const ev = evOf(s.id).sort((a,b)=>(a.date||'').localeCompare(b.date||''));
+  h += `<div class="p-sub">الشواهد (${ev.length})</div>` + await pEvidence(ev, o.imgs);
+  return h;
+}
+async function doPrint(bodyHTML, pdfHint){
+  const root=$('#print-root'); root.innerHTML=bodyHTML;
+  await Promise.all($$('img',root).map(i=>i.complete?1:new Promise(r=>{i.onload=i.onerror=r})));
+  if(pdfHint) toast('اختاري «حفظ بتنسيق PDF» من نافذة الطباعة');
+  setTimeout(()=>{ window.print(); },pdfHint?600:100);
+}
+async function printSections(ids, o){
+  o = Object.assign({cover:true,stats:true,imgs:true,sign:true,pdf:false},o);
+  const p=state.profile;
+  let h='';
+  if(o.cover) h += `<div class="p-page"><div class="p-cover">
+    <div style="font-size:13pt;line-height:1.9">المملكة العربية السعودية<br>وزارة التعليم<br>${esc(p.department||'')}<br>${esc(p.org)}</div>
+    <div class="big">سجل الإنجاز المهني</div><div class="mid">للمساعدة الإدارية</div><div class="ln"></div>
+    <div class="mid">إعداد: <b>${esc(p.name)}</b></div><div class="mid">${esc(p.title)}</div><div class="mid">العام الدراسي ${esc(p.year)}</div>
+    ${p.principal?`<div style="margin-top:30px;font-size:13pt">مديرة المدرسة: ${esc(p.principal)}</div>`:''}</div></div>`;
+  h += `<div class="p-page">${pHead()}<div class="p-title">${ids.length===1?'تقرير: '+esc(secTitle(ids[0])):'سجل الإنجاز المهني'}</div>${pInfo()}`;
+  if(o.stats) h += pStats();
+  for(const id of ids){ const s=sec(id); if(s) h += await pSection(s,o); }
+  if(o.sign) h += pSign();
+  h += `</div>`;
+  doPrint(h, o.pdf);
+}
+async function printList(list, title){
+  const h = `<div class="p-page">${pHead()}<div class="p-title">${esc(title)}</div>${pInfo()}${await pEvidence(list,true)}${pSign()}</div>`;
+  doPrint(h);
+}
+function repOpts(){ return {cover:$('#oCover').checked, stats:$('#oStats').checked, imgs:$('#oImgs').checked, sign:$('#oSign').checked}; }
+function repSel(){ return $$('#repSecs input:checked').map(i=>i.value); }
+
+/* ============ Events ============ */
+document.addEventListener('click', async ev => {
+  const g = ev.target.closest('[data-go]'); if(g){ go(g.dataset.go); return; }
+  if(ev.target.closest('[data-close]') || ev.target.id==='ov'){ closeModal(); return; }
+  const b = ev.target.closest('[data-act]'); if(!b) return;
+  const a=b.dataset.act, id=b.dataset.id, sid=b.dataset.sec;
+  switch(a){
+    case 'add-ev': evForm(null, sid || (view.startsWith('sec:') && !['evidence'].includes(view.slice(4)) ? view.slice(4) : null)); break;
+    case 'edit-ev': evForm(state.evidence.find(e=>e.id===id)); break;
+    case 'view-ev': viewEv(id); break;
+    case 'del-ev': closeModal(); delEv(id); break;
+    case 'print-ev': { const e=state.evidence.find(x=>x.id===id); closeModal(); printList([e], 'شاهد: '+e.title); break; }
+    case 'add-item': itemForm(sid); break;
+    case 'edit-item': itemForm(sid, +b.dataset.i); break;
+    case 'del-item': { const s=sec(sid); if(await confirmBox(`حذف البند «<b>${esc(s.items[+b.dataset.i].title)}</b>»؟`,'حذف')){ s.items.splice(+b.dataset.i,1); save(); render(); } break; }
+    case 'item-up': { const s=sec(sid), i=+b.dataset.i; [s.items[i-1],s.items[i]]=[s.items[i],s.items[i-1]]; save(); render(); break; }
+    case 'lock-now': Lock.lock(); break;
+    case 'backup': exportBackup(); break;
+    case 'import': $('#importInput').click(); break;
+    case 'snooze': state.settings.snoozeUntil = Date.now()+86400000; save(false); render(); break;
+    case 'persist': if(navigator.storage&&navigator.storage.persist){ const ok=await navigator.storage.persist(); $('#persistState').textContent = ok?'✓ مُفعّل — لن يحذف المتصفح البيانات تلقائيًا':'لم يوافق المتصفح (البيانات ما زالت محفوظة عادةً)'; } else toast('المتصفح لا يدعم هذه الميزة'); break;
+    case 'print-sec': printSections([sid], {cover:false, stats:false}); break;
+    case 'print-all': printSections(state.sections.map(s=>s.id)); break;
+    case 'pdf-all': printSections(state.sections.map(s=>s.id), {pdf:true}); break;
+    case 'print-sel': { const s=repSel(); if(!s.length) return toast('حددي قسمًا واحدًا على الأقل','err'); printSections(s, repOpts()); break; }
+    case 'pdf-sel': { const s=repSel(); if(!s.length) return toast('حددي قسمًا واحدًا على الأقل','err'); printSections(s, {...repOpts(), pdf:true}); break; }
+    case 'print-filtered': printList(filtered(), 'تقرير الشواهد'+(filt.section?' — '+secTitle(filt.section):'')+(filt.school?' — '+SCHOOLS[filt.school]:'')); break;
+    case 'print-stats': doPrint(`<div class="p-page">${pHead()}<div class="p-title">لوحة الإحصائيات</div>${pInfo()}${pStats()}${pSign()}</div>`); break;
+    case 'add-sec': { const t=await promptBox('قسم جديد','اسم القسم'); if(t){ const idx=state.sections.findIndex(s=>s.kind==='evidence'); state.sections.splice(idx,0,{id:'c_'+uid(),title:t,custom:true,desc:'',intro:'',items:[]}); save(); render(); toast('تمت إضافة القسم','ok'); } break; }
+    case 'ren-sec': { const s=sec(sid); const t=await promptBox('إعادة تسمية القسم','اسم القسم',s.title); if(t){ s.title=t; save(); render(); } break; }
+    case 'sec-up': { const i=state.sections.findIndex(s=>s.id===sid); [state.sections[i-1],state.sections[i]]=[state.sections[i],state.sections[i-1]]; save(); render(); break; }
+    case 'del-sec': { const s=sec(sid); if(evOf(sid).length) return toast('انقلي شواهد هذا القسم أو احذفيها أولًا','err'); if(await confirmBox(`حذف القسم «<b>${esc(s.title)}</b>» وبنوده؟`,'حذف')){ state.sections=state.sections.filter(x=>x.id!==sid); save(); render(); } break; }
+    case 'wipe': { if(await confirmBox('سيتم حذف <b>جميع</b> البيانات والشواهد والملفات من هذا المتصفح نهائيًا. هل صدّرتِ نسخة احتياطية؟','نعم، احذف كل شيء')){ await FileDB.clear(); localStorage.removeItem(KEY); urlCache.clear(); load(); save(false); view='home'; render(); toast('تم حذف جميع البيانات'); } break; }
+  }
+});
+document.addEventListener('input', ev => {
+  if(ev.target.id==='secIntro'){ sec(ev.target.dataset.sec).intro = ev.target.value; debSave(); }
+  const pf = ev.target.closest('#profForm');
+  if(pf && ev.target.name){ state.profile[ev.target.name]=ev.target.value; debSave(); bindProfile(); }
+});
+document.addEventListener('change', ev => {
+  if(ev.target.id==='remDays'){ state.settings.reminderDays=+ev.target.value; save(false); toast('تم حفظ إعداد التذكير','ok'); }
+});
+document.addEventListener('submit', ev => { if(ev.target.id==='profForm'){ ev.preventDefault(); save(); render(); toast('تم حفظ البيانات','ok'); } });
+document.addEventListener('keydown', ev => { if(ev.key==='Escape' && $('#ov').classList.contains('show')) closeModal(); });
+let debT; function debSave(){ clearTimeout(debT); debT=setTimeout(()=>save(),500); }
+$('#importInput').onchange = e => { const f=e.target.files[0]; e.target.value=''; if(f) importBackup(f); };
+$('#menuBtn').onclick = () => { $('#side').classList.add('open'); $('#scrim').classList.add('show'); };
+$('#scrim').onclick = closeSide;
+function closeSide(){ $('#side').classList.remove('open'); $('#scrim').classList.remove('show'); }
+document.addEventListener('click', ev => { if(ev.target.closest('#repAll')) $$('#repSecs input').forEach(i=>i.checked=true); if(ev.target.closest('#repNone')) $$('#repSecs input').forEach(i=>i.checked=false); });
+window.addEventListener('afterprint', ()=>{ $('#print-root').innerHTML=''; });
+window.addEventListener('storage', e => { if(e.key===KEY){ load(); render(); } });
+async function showUsage(){
+  const el=$('#usage'); if(!el) return;
+  if(navigator.storage&&navigator.storage.estimate){ const e=await navigator.storage.estimate().catch(()=>({})); el.textContent=`${fmtSize(e.usage||0)} مستخدمة من ${fmtSize(e.quota||0)} متاحة`; } else el.textContent='غير متاح';
+  if(navigator.storage&&navigator.storage.persisted){ const p=await navigator.storage.persisted().catch(()=>false); const ps=$('#persistState'); if(ps&&p) ps.textContent='✓ التخزين الدائم مُفعّل'; }
+}
+const _render = render;
+render = function(){ _render(); if(view==='settings') showUsage(); };
+// periodic reminder check (every hour) while page open
+setInterval(()=>{ const b=reminderBanner(); if(b && !$('.banner.warn')) { toast('⏰ تذكير: صدّري نسخة احتياطية من سجلكِ'); render(); } }, 3600000);
+
+
+/* ============ Password lock ============ */
+function sha256Hex(bytes){ // pure-JS fallback when crypto.subtle is unavailable
+  const K=[0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
+  let H=[0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19];
+  const l=bytes.length, n=((l+9+63)>>6)<<6, m=new Uint8Array(n); m.set(bytes); m[l]=0x80;
+  const bl=l*8; for(let i=0;i<4;i++) m[n-1-i]=(bl>>>(8*i))&255; m[n-5]=Math.floor(bl/2**32)&255;
+  const W=new Uint32Array(64), r=(x,k)=>(x>>>k)|(x<<(32-k));
+  for(let o=0;o<n;o+=64){
+    for(let i=0;i<16;i++) W[i]=(m[o+4*i]<<24)|(m[o+4*i+1]<<16)|(m[o+4*i+2]<<8)|m[o+4*i+3];
+    for(let i=16;i<64;i++){ const s0=r(W[i-15],7)^r(W[i-15],18)^(W[i-15]>>>3), s1=r(W[i-2],17)^r(W[i-2],19)^(W[i-2]>>>10); W[i]=(W[i-16]+s0+W[i-7]+s1)|0; }
+    let [a,b,c,d,e,f,g,h]=H;
+    for(let i=0;i<64;i++){ const t1=(h+(r(e,6)^r(e,11)^r(e,25))+((e&f)^(~e&g))+K[i]+W[i])|0, t2=((r(a,2)^r(a,13)^r(a,22))+((a&b)^(a&c)^(b&c)))|0; h=g;g=f;f=e;e=(d+t1)|0;d=c;c=b;b=a;a=(t1+t2)|0; }
+    H=[H[0]+a,H[1]+b,H[2]+c,H[3]+d,H[4]+e,H[5]+f,H[6]+g,H[7]+h].map(x=>x|0);
+  }
+  return H.map(x=>(x>>>0).toString(16).padStart(8,'0')).join('');
+}
+
+const Lock = {
+  KEY:'fz_achievement_lock_v1', SALT:'fz-rec-1448|',
+  DEFAULT:'767177da97375f837ee2d30b18722b3305fba47bf853be19c53d79c74515c7c4',
+  tries:0, until:0, last:Date.now(),
+  cfg(){ try{ return Object.assign({hash:this.DEFAULT,auto:15}, JSON.parse(localStorage.getItem(this.KEY)||'{}')); }catch(e){ return {hash:this.DEFAULT,auto:15}; } },
+  setCfg(o){ try{ localStorage.setItem(this.KEY, JSON.stringify(Object.assign(this.cfg(),o))); }catch(e){} },
+  async hash(pw){
+    const data = new TextEncoder().encode(this.SALT+pw);
+    try{ if(window.crypto && crypto.subtle){ const b=await crypto.subtle.digest('SHA-256',data); return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join(''); } }catch(e){}
+    return sha256Hex(data);
+  },
+  async check(pw){ pw=String(pw||'').trim(); return (await this.hash(pw)) === this.cfg().hash; },
+  lock(){ document.body.classList.add('locked'); closeModal(); try{ sessionStorage.removeItem('fz_unlocked'); }catch(e){} const i=$('#lockPw'); i.value=''; $('#lockErr').textContent=''; setTimeout(()=>i.focus(),50); },
+  unlock(){ document.body.classList.remove('locked'); this.last=Date.now(); try{ sessionStorage.setItem('fz_unlocked', String(Date.now())); }catch(e){} },
+  isSessionOpen(){ try{ const t=+sessionStorage.getItem('fz_unlocked'); const a=this.cfg().auto; return t && (!a || Date.now()-t < a*60000); }catch(e){ return false; } }
+};
+$('#lockForm').addEventListener('submit', async ev => {
+  ev.preventDefault();
+  const err=$('#lockErr');
+  if(Date.now() < Lock.until){ err.textContent=`محاولات كثيرة — انتظري ${Math.ceil((Lock.until-Date.now())/1000)} ثانية`; return; }
+  try{
+    if(await Lock.check($('#lockPw').value)){ Lock.tries=0; Lock.unlock(); try{ render(); }catch(e){ console.error(e); } }
+    else{ Lock.tries++; $('#lockPw').value=''; if(Lock.tries>=5){ Lock.until=Date.now()+30000; Lock.tries=0; err.textContent='محاولات خاطئة كثيرة — انتظري 30 ثانية'; } else err.textContent='كلمة المرور غير صحيحة'; }
+  }catch(e){ err.textContent=e.message; }
+});
+$('#lockEye').onclick = () => { const i=$('#lockPw'); i.type = i.type==='password'?'text':'password'; i.focus(); };
+$('#lockForgot').onclick = async () => {
+  const ok = await confirmBox('لا يمكن استرجاع كلمة المرور. الحل الوحيد هو <b>حذف جميع بيانات السجل من هذا المتصفح</b> وإعادة كلمة المرور إلى الافتراضية، ثم استيراد آخر نسخة احتياطية لديكِ.<br><br>هل تريدين المتابعة؟','حذف البيانات وإعادة التعيين');
+  if(ok){ try{ await FileDB.clear(); }catch(e){} localStorage.removeItem(KEY); localStorage.removeItem(Lock.KEY); urlCache.clear(); load(); save(false); view='home'; toast('تمت إعادة التعيين — ادخلي بكلمة المرور الافتراضية'); }
+  Lock.lock();
+};
+['click','keydown','touchstart','scroll'].forEach(t=>document.addEventListener(t,()=>{ if(!document.body.classList.contains('locked')){ Lock.last=Date.now(); try{ sessionStorage.setItem('fz_unlocked',String(Date.now())); }catch(e){} } },{passive:true}));
+setInterval(()=>{ const a=Lock.cfg().auto; if(a && !document.body.classList.contains('locked') && Date.now()-Lock.last > a*60000) Lock.lock(); }, 20000);
+document.addEventListener('submit', async ev => {
+  if(ev.target.id!=='pwForm') return;
+  ev.preventDefault(); const fd=new FormData(ev.target);
+  if(!await Lock.check(fd.get('cur'))) return toast('كلمة المرور الحالية غير صحيحة','err');
+  if(fd.get('nw')!==fd.get('nw2')) return toast('كلمتا المرور الجديدتان غير متطابقتين','err');
+  if(fd.get('nw').length<4) return toast('كلمة المرور قصيرة جدًا','err');
+  Lock.setCfg({hash: await Lock.hash(String(fd.get('nw')).trim())}); ev.target.reset(); toast('تم تغيير كلمة المرور','ok');
+});
+document.addEventListener('change', ev => { if(ev.target.id==='autoLock'){ Lock.setCfg({auto:+ev.target.value}); toast('تم حفظ إعداد القفل التلقائي','ok'); } });
+
+
+/* ============ Form submit shim (works even where native form submission is blocked) ============ */
+function fireSubmit(form){
+  if(!form) return;
+  if(form.reportValidity && !form.reportValidity()) return;
+  form.dispatchEvent(new Event('submit',{bubbles:true,cancelable:true}));
+}
+document.addEventListener('click', ev => {
+  const btn = ev.target.closest('form button[type=submit], form input[type=submit]');
+  if(!btn) return;
+  ev.preventDefault();
+  fireSubmit(btn.form);
+}, true);
+document.addEventListener('keydown', ev => {
+  if(ev.key!=='Enter' || ev.isComposing) return;
+  const el = ev.target;
+  if(!el.form || el.tagName==='TEXTAREA' || el.tagName==='BUTTON' || el.type==='checkbox' || el.type==='radio' || el.type==='file') return;
+  ev.preventDefault();
+  fireSubmit(el.form);
+}, true);
+
+/* ============ Init ============ */
+(async function init(){
+  load();
+  try{ await FileDB.open(); }catch(e){ toast('المتصفح لا يدعم حفظ الملفات (IndexedDB) — استخدمي متصفحًا حديثًا','err'); }
+  if(navigator.storage&&navigator.storage.persist){ try{ navigator.storage.persisted().then(p=>{ if(!p) navigator.storage.persist().catch(()=>{}); }).catch(()=>{}); }catch(e){} }
+  const h = location.hash.slice(1); if(h) view = decodeURIComponent(h);
+  if(Lock.isSessionOpen()) Lock.unlock(); else Lock.lock();
+  render();
+  if(reminderBanner()) setTimeout(()=>toast('⏰ حان وقت تصدير نسخة احتياطية من سجلكِ'),800);
+})();
+window.addEventListener('hashchange', ()=>{ const h=decodeURIComponent(location.hash.slice(1)); if(h && h!==view){ view=h; render(); } });
+const _go = go; go = function(v){ history.replaceState(null,'','#'+encodeURIComponent(v)); _go(v); };
+</script>
+</body>
+</html>
